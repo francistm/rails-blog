@@ -1,0 +1,5 @@
+zh-CN:
+  devise:
+    failure:
+      admin:
+        unauthenticated: 登录后即可继续访问

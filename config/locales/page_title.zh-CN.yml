@@ -1,0 +1,7 @@
+zh-CN:
+  admin/sessions:
+    new: '后台管理登录'
+  admin/settings:
+    index: '站点设置'
+  admin/dashboard:
+    index: '后台管理首页'

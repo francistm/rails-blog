@@ -1,0 +1,17 @@
+<% provide(:page_title, t('admin/settings.index')) %>
+
+<%= form_for :settings, url: [:admin, :settings], method: :put do |f| %>
+
+  <% @site_settings.each do |setting| %>
+    <%= f.fields_for :site_setting, setting do |ff| %>
+      <div class="form-group">
+        <%= ff.label setting.var %>
+        <%= ff.hidden_field :var %>
+        <%= ff.text_field :value, class: 'form-control' %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <%= f.submit class: 'btn btn-primary' %>
+
+<% end %>

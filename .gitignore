@@ -1,10 +1,9 @@
 *.swp
+.byebug_history
 
+/tmp
+/log
 /.bundle
-
+/.vagrant
 /db/*.sqlite3
 /db/*.sqlite3-journal
-
-/log/*
-/tmp
-!/log/.keep

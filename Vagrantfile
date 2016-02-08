@@ -42,7 +42,7 @@ EOF
     gem sources --add https://ruby.taobao.org/ --remove http://rubygems.org/
     sed -i -E 's!https?://cache.ruby-lang.org/pub/ruby!https://ruby.taobao.org/mirrors/ruby!' $rvm_path/config/db
 
-    rvm install ruby-2.1.5
+    rvm install ruby-2.2.2
     gem install --no-rdoc bundler
     bundle config mirror.https://rubygems.org https://ruby.taobao.org
   SHELL

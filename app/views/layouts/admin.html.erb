@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    <% if content_for?(:page_title) %>
+      <%= yield :page_title %> &raquo;
+    <% end %>
+
+    <%= SiteSetting.site_name %>
+  </title>
+  <%= stylesheet_link_tag 'admin', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'admin', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <%= render partial: 'navigator/admin_navbar' %>
+
+  <% flash.each do |name, mesg| %>
+    <%= content_tag :div, mesg, class: "alert alert-#{name}" %>
+  <% end %>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
