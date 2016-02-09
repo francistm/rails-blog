@@ -5,4 +5,5 @@ class Admin < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :nickname, presence: true, uniqueness: { case_sensitive: false }
 end

@@ -1,0 +1,16 @@
+<% provide(:page_title, t('admin/registrations.edit', nickname: (@admin.nickname || @admin.email) )) %>
+
+<div class="page-header">
+  <h1>编辑当前账户信息</h1>
+</div>
+
+<%= form_for @admin, url: [:admin, :registration] do |f| %>
+
+  <div class="form-group">
+    <%= f.label :nickname %>
+    <%= f.text_field :nickname, class: 'form-control' %>
+  </div>
+
+  <%= f.submit class: 'btn btn-primary' %>
+
+<% end %>

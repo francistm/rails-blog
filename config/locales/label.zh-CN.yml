@@ -2,12 +2,19 @@ zh-CN:
   helpers:
     label:
       admin:
-        email: 'Email'
-        password: '密码'
       site_setting:
         site_name: '站点名称'
     submit:
+      update: '更新%{model}'
       sessions:
         sign_in: '登录'
       settings:
         submit: '保存设置'
+  activerecord:
+    models:
+      admin: '管理账户'
+    attributes:
+      admin:
+        email: 'Email'
+        nickname: '昵称'
+        password: '密码'

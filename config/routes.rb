@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
     get 'settings', to: 'settings#index', as: :settings
     put 'settings', to: 'settings#update'
+
+    resources :posts
+    resources :uploads
   end
 
   namespace :front do

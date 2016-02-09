@@ -1,7 +1,15 @@
 zh-CN:
+  admin/posts:
+    new: '添加新日志'
+    index: '日志管理'
+  admin/uploads:
+    new: '上传新附件'
+    index: '附件管理'
   admin/sessions:
     new: '后台管理登录'
   admin/settings:
     index: '站点设置'
   admin/dashboard:
     index: '后台管理首页'
+  admin/registrations:
+    edit: '设置 %{nickname} 账户信息'

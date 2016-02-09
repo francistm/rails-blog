@@ -1,6 +1,12 @@
 zh-CN:
+  errors:
+    messages:
+      blank: '不能为空'
+
   admin/sessions:
     sign_in_failed: '输入的Email和密码不匹配'
     sign_out_success: '当前登录用户已注销'
   admin/settings:
     setting_update_success: '站点设置更新成功'
+  admin/registrations:
+    admin_update_success: '当前账户信息更新成功'
