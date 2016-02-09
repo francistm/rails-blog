@@ -88,6 +88,7 @@ GEM
     mysql2 (0.4.2)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    nprogress-rails (0.1.6.7)
     orm_adapter (0.5.0)
     rack (1.6.4)
     rack-test (0.6.3)
@@ -174,6 +175,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   mysql2
+  nprogress-rails
   rails (= 4.2.5.1)
   rails-settings-cached (~> 0.4.0)
   rails_12factor

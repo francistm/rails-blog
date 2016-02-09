@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'mysql2'
 gem 'turbolinks'
 gem 'jquery-rails'
+gem 'nprogress-rails'
 
 gem 'rails', '4.2.5.1'
 gem 'devise', '~> 3.5.6'
