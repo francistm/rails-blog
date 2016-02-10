@@ -11,5 +11,7 @@ zh-CN:
     index: '站点设置'
   admin/dashboard:
     index: '后台管理首页'
+  admin/passwords:
+    edit: '更改当前账户密码'
   admin/registrations:
-    edit: '设置 %{nickname} 账户信息'
+    edit: '设置当前账户资料'

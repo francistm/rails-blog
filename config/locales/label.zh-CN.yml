@@ -18,3 +18,4 @@ zh-CN:
         email: 'Email'
         nickname: '昵称'
         password: '密码'
+        password_confirmation: '确认密码'

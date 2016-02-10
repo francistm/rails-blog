@@ -2,6 +2,15 @@ zh-CN:
   errors:
     messages:
       blank: '不能为空'
+      too_short: '不能少于%{count}个字符'
+
+  activerecord:
+    errors:
+      models:
+        admin:
+          attributes:
+            password_confirmation:
+              confirmation: '与上一次输入的密码不相同'
 
   admin/sessions:
     sign_in_failed: '输入的Email和密码不匹配'
@@ -9,4 +18,4 @@ zh-CN:
   admin/settings:
     setting_update_success: '站点设置更新成功'
   admin/registrations:
-    admin_update_success: '当前账户信息更新成功'
+    admin_update_success: '当前账户资料更新成功'
