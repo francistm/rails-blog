@@ -1,6 +1,7 @@
 zh-CN:
   admin/posts:
     new: '添加新日志'
+    edit: '编辑%{title}'
     index: '日志管理'
   admin/uploads:
     new: '上传新附件'

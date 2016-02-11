@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   end
 
   namespace :front do
+    resources :posts, only: [:show, :index]
   end
 
   root to: 'front/site#index'

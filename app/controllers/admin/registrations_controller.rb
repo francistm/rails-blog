@@ -25,6 +25,8 @@ class Admin::RegistrationsController < AdminController
     render action: :edit
   end
 
+  private
+
   def admin_attribute_params
     params.require(:admin).permit(
       :nickname

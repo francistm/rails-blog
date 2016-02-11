@@ -1,0 +1,11 @@
+<tr>
+  <td><%= post.id %></td>
+  <td><%= post.slug %></td>
+  <td><%= post.title %></td>
+  <td><%= l post.published_at, format: :short %></td>
+  <td>
+    <%= link_to '查看', front_post_path(post.slug), class: 'btn btn-primary' %>
+    <%= link_to '编辑', edit_admin_post_path(post), class: 'btn btn-default' %>
+    <%= link_to '删除', admin_post_path(post), method: :delete, class: 'btn btn-danger' %>
+  </td>
+</tr>

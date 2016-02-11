@@ -1,0 +1,7 @@
+<% provide(:page_title, t('admin/posts.edit', title: @post.title)) %>
+
+<div class="page-header">
+  <h1>编辑<%= @post.title %>日志</h1>
+</div>
+
+<%= render partial: 'form', locals: { post: @post } %>

@@ -12,6 +12,7 @@ zh-CN:
         submit: '保存设置'
   activerecord:
     models:
+      post: '日志'
       admin: '管理账户'
     attributes:
       admin:
@@ -19,3 +20,8 @@ zh-CN:
         nickname: '昵称'
         password: '密码'
         password_confirmation: '确认密码'
+      post:
+        slug: 'Slug'
+        title: '标题'
+        content: '正文'
+        published_at: '发布时间'

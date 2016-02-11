@@ -3,3 +3,26 @@
 <div class="page-header">
   <h1>日志管理</h1>
 </div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <td>#</td>
+      <td><%= t 'activerecord.attributes.post.slug' %></td>
+      <td><%= t 'activerecord.attributes.post.title' %></td>
+      <td><%= t 'activerecord.attributes.post.published_at' %></td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @posts.present? %>
+      <%= render @posts %>
+    <% else %>
+      <tr>
+        <td colspan="5">
+          <div class="text-center">还没有添加任何日志</div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
