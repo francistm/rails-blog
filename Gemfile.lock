@@ -102,7 +102,11 @@ GEM
     normalize-rails (3.0.3)
     nprogress-rails (0.1.6.7)
     orm_adapter (0.5.0)
+    posix-spawn (0.3.11)
     puma (2.16.0)
+    pygments.rb (0.6.3)
+      posix-spawn (~> 0.3.6)
+      yajl-ruby (~> 1.2.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -196,6 +200,7 @@ GEM
       activemodel (>= 4.2)
       debug_inspector
       railties (>= 4.2)
+    yajl-ruby (1.2.1)
 
 PLATFORMS
   ruby
@@ -215,12 +220,13 @@ DEPENDENCIES
   normalize-rails
   nprogress-rails
   puma (~> 2.16.0)
+  pygments.rb (~> 0.6.3)
   rails (= 4.2.5.1)
   rails-settings-cached (~> 0.4.0)
   rails_12factor (~> 0.0.3)
   redcarpet (~> 3.3.4)
   rspec-rails (~> 3.0)
-  sass-rails (~> 5.0)
+  sass-rails (~> 5.0.0)
   sdoc (~> 0.4.0)
   spring
   spring-commands-rspec
