@@ -14,7 +14,7 @@ class Admin::SessionsController < ::AdminController
 
     if @admin.present? && @admin.valid_password?(password)
       sign_in :admin, @admin
-      redirect_to [:admin, :dashboard] and return
+      redirect_to after_sign_in_path_for(@admin) and return
     end
 
     flash[:danger] = t 'admin/sessions.sign_in_failed'
