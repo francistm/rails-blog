@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
     resources :posts
     resources :uploads
+    resources :jekyll_imports, only: [:new, :create]
   end
 
   namespace :front do

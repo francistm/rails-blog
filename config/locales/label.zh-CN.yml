@@ -10,6 +10,14 @@ zh-CN:
         sign_in: '登录'
       settings:
         submit: '保存设置'
+      jekyll_import:
+        create: '导入Jekyll日志'
+
+  activemodel:
+    attributes:
+      jekyll_import:
+        post: '日志文件'
+
   activerecord:
     models:
       post: '日志'

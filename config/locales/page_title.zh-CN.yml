@@ -12,7 +12,7 @@ zh-CN:
     index: '站点设置'
   admin/dashboard:
     index: '后台管理首页'
-  admin/passwords:
-    edit: '更改当前账户密码'
   admin/registrations:
     edit: '设置当前账户资料'
+  admin/jekyll_imports:
+    new: '导入Jekyll日志'

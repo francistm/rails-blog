@@ -23,3 +23,5 @@ zh-CN:
     setting_update_success: '站点设置更新成功'
   admin/registrations:
     admin_update_success: '当前账户资料更新成功'
+  admin//jekyll_imports:
+    create_success: '日志『%{title}』导入成功'
