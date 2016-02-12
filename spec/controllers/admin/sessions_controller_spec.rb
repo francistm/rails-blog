@@ -33,7 +33,7 @@ describe Admin::SessionsController do
     it 'redirect to admin/dashboard#index if login success' do
       admin = create(:admin)
       post :create, admin: { email: admin.email, password: '12345678' }
-      expect(response).to redirect_to [:admin, :dashboard]
+      expect(response).to redirect_to root_path
     end
   end
 
