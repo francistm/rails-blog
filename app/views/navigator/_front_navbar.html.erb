@@ -1,0 +1,11 @@
+<div id="logo">
+  <%= link_to root_path do %>
+    <%= image_tag 'logo.png' %>
+  <% end %>
+</div>
+
+<ul class="nav">
+  <li><%= link_to '首页', root_path %></li>
+  <li><%= link_to '日志归档', archive_front_posts_path %></li>
+  <li><%= link_to '友情链接', nil %></li>
+</ul>

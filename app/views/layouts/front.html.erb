@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>
+    <% if content_for?(:page_title) %>
+      <%= yield :page_title %> &raquo;
+    <% end %>
+
+    <%= SiteSetting.site_name %>
+  </title>
+  <%= stylesheet_link_tag 'front', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'front', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <div class="container">
+    <div class="clearfix">
+      <nav class="pull-left"><%= render partial: 'navigator/front_navbar' %></nav>
+      <main class="pull-right"><%= yield %></main>
+    </div>
+  </div>
+</body>
+</html>

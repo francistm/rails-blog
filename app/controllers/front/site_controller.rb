@@ -1,7 +1,7 @@
 module Front
   class SiteController < FrontController
     def index
-      render text: 'hello world'
+      @post_count = Post.all.count
     end
   end
 end
