@@ -5,12 +5,14 @@ Rails.application.routes.draw do
     get 'settings', to: 'settings#index', as: :settings
     put 'settings', to: 'settings#update'
 
-    resources :posts
     resources :uploads
+    resources :links, expect: :show
+    resources :posts, except: :show
     resources :jekyll_imports, only: [:new, :create]
   end
 
   namespace :front, path: '' do
+    resources :links, only: :index
     resources :posts, path: 'entries', param: :slug, only: :show do
       get 'archive', action: :index, on: :collection
     end

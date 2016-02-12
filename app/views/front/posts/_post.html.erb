@@ -1,4 +1,6 @@
-<li class="clearfix">
-  <div class="pull-left"><%= link_to post.title, front_post_path(post.slug) %></div>
-  <div class="pull-right"><%= l post.published_at %></div>
+<li class="post-list-item">
+  <%= link_to front_post_path(post.slug), class: 'clearfix' do %>
+    <div class="pull-left"><%= post.title %></div>
+    <div class="pull-right page-meta"><%= l post.published_at %></div>
+  <% end %>
 </li>

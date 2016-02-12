@@ -1,7 +1,16 @@
 <% provide(:page_title, @post.title) %>
 
 <article>
-  <h1 class="page-title"><%= @post.title %></h1>
-  <div class="page-meta text-right"><%= l @post.published_at %></div>
-  <div class="content markdown"><%= sanitize parse_markdown @post.content %></div>
+  <h1 class="page-title">
+    <%= sanitize @post.title %>
+  </h1>
+
+  <div class="page-meta">
+    发表于 <%= l @post.published_at %>，
+    最后更新 <%=l @post.updated_at.to_date %>
+  </div>
+
+  <div class="content markdown">
+    <%= sanitize parse_markdown @post.content %>
+  </div>
 </article>
