@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'figaro'
 gem 'mysql2'
 gem 'turbolinks'
 gem 'jquery-rails'
@@ -18,6 +19,8 @@ gem 'date_validator', '~> 0.9.0'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'rails-settings-cached', '~> 0.4.0'
 
+gem 'paperclip', '~> 4.3.0'
+gem 'paperclip-qiniu', '~> 0.2.0'
 
 group :doc do
   gem 'sdoc', '~> 0.4.0'

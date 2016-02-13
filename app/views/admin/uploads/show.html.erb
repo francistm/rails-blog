@@ -1,0 +1,9 @@
+<% provide(:page_title, t('admin/uploads.show', filename: @upload.file_file_name)) %>
+
+<div class="page-header">
+  <h1>查看 <%= @upload.file_file_name %> 文件</h1>
+</div>
+
+<% if @upload.is_image? %>
+  <%= qiniu_image_tag @upload.file.url, thumbnail: '300x300>' %>
+<% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160212164744) do
+ActiveRecord::Schema.define(version: 20160213061812) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -62,5 +62,19 @@ ActiveRecord::Schema.define(version: 20160212164744) do
   end
 
   add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true, using: :btree
+
+  create_table "uploads", force: :cascade do |t|
+    t.integer  "attachable_id",     limit: 4
+    t.string   "attachable_type",   limit: 255
+    t.integer  "admin_id",          limit: 4
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "file_file_name",    limit: 255
+    t.string   "file_content_type", limit: 255
+    t.integer  "file_file_size",    limit: 4
+    t.datetime "file_updated_at"
+  end
+
+  add_index "uploads", ["attachable_id"], name: "index_uploads_on_attachable_id", using: :btree
 
 end

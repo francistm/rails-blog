@@ -1,0 +1,12 @@
+<tr>
+  <td><%= upload.id %></td>
+  <td><%= upload.admin.try(:nickname) %></td>
+  <td><%= upload.attachable.try(:title) %></td>
+  <td><%= upload.file_file_name %></td>
+  <td><%= number_to_human_size upload.file_file_size %></td>
+  <td>
+    <%= link_to '查看', [:admin, upload], class: 'btn btn-primary' %>
+    <%= link_to '编辑', [:edit, :admin, upload], class: 'btn btn-default' %>
+    <%= link_to '删除', [:admin, upload], method: :delete, class: 'btn btn-danger' %>
+  </td>
+</tr>

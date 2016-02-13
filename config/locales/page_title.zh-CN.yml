@@ -6,6 +6,7 @@ zh-CN:
   admin/uploads:
     new: '上传新附件'
     index: '附件管理'
+    show: '查看 %{filename} 文件'
   admin/sessions:
     new: '后台管理登录'
   admin/settings:

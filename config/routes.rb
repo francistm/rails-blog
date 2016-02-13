@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     put 'settings', to: 'settings#update'
 
     resources :uploads
-    resources :links, expect: :show
+    resources :links, except: :show
     resources :posts, except: :show
     resources :jekyll_imports, only: [:new, :create]
   end

@@ -16,6 +16,10 @@ zh-CN:
     create_success: '日志『%{title}』创建成功'
     update_success: '日志『%{title}』更新成功'
     destroy_success: '日志『%{title}』删除成功'
+  admin/uploads:
+    create_success: '文件『%{filename}』上传成功'
+    update_success: '文件『%{filename}』更新成功'
+    destroy_success: '文件『%{filename}』删除成功'
   admin/sessions:
     sign_in_failed: '输入的Email和密码不匹配'
     sign_out_success: '当前登录用户已注销'
