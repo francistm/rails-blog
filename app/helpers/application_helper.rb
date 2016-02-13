@@ -30,7 +30,7 @@ module ApplicationHelper
 
   def markdown_parser_render
     HTMLWithPygments.new({
-      hard_wrap: true,
+      hard_wrap: false,
       filter_html: true,
       link_attributes: { rel: 'external nofollow' },
     })

@@ -43,59 +43,51 @@ nav
     @extend .clearfix
 
     li
-      display: block
-      font-size: 16px
-      margin: 30px auto
+      font-size: 14px
+      list-style: none
+      margin: 10px auto
       text-align: right
 
 main
   width: 770 / 960 * 100%
 
-  .post-list
+  ul.post-list
     padding: 0
     @extend .clearfix
 
-  .post-list-item
-    padding: 10px
+  li.post-list-item
     display: block
     list-style: none
-    margin: 15px auto
-    border-radius: 5px
-
-    transition-duration: 1s
-    transition-property: background-color
+    margin: 10px auto
 
     a
       display: block
       font-size: 14px
 
-    &:hover
-      background-color: $blue
-      transition-duration: 0.05s
-      transition-property: background-color
-
-      a
-        color: #fff
-
 article
-  margin-top: -0.67em
-
   p
     font-size: 14px
     line-height: 30px
+
+  ul, ol
+    font-size: 14px
+
+  pre, code
+    margin: 0
+    padding: 0
+    font-size: 14px
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace
 
   .page-meta
     color: gray
     font-size: 12px
     text-align: right
 
+  .page-title
+    margin-top: 0
+
   .highlight
     padding: 10px
-
-    pre
-      margin: 0
-      font-size: 14px
-      font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace
 
 @media screen and (max-width: 960px)
   .container
