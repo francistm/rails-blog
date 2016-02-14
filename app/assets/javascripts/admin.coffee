@@ -44,6 +44,12 @@ class AdminPostPage extends Page
       formData: {}
       url: '/admin/uploads.js'
       paramName: 'upload[file]'
+      change: (e, data) ->
+        $("#file-add-btn").parent().addClass('disabled')
+        $("#file-add-btn").siblings('.btn-text').html('上传中')
+      success: (result, status, xhr) ->
+        $("#file-add-btn").parent().removeClass('disabled')
+        $("#file-add-btn").siblings('.btn-text').html('选择文件')
     })
 
     $(@selector).on 'click', '[data-markdown-url]', (e) ->
