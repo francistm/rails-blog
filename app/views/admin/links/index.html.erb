@@ -1,0 +1,19 @@
+<% provide(:page_title, t('admin/links.index')) %>
+
+<div class="page-title">
+  <h1>友情链接管理</h1>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <td>#</td>
+      <td>链接名</td>
+      <td>链接地址</td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @links %>
+  </tbody>
+</table>

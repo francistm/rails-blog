@@ -1,0 +1,7 @@
+<% provide(:page_title, t('admin/links.edit', title: @link.title)) %>
+
+<div class="page-header">
+  <h1>编辑 <%= @link.title %> 链接</h1>
+</div>
+
+<%= render partial: 'form', locals: { link: @link } %>

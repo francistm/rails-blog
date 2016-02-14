@@ -26,6 +26,10 @@ group :doc do
   gem 'sdoc', '~> 0.4.0'
 end
 
+group :test do
+  gem 'simplecov', require: false
+end
+
 group :production do
   gem 'puma', '~> 2.16.0'
   gem 'rails_12factor', '~> 0.0.3'

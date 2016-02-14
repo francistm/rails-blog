@@ -48,11 +48,11 @@ nav
 main
   width: 770 / 960 * 100%
 
-  ul.post-list
+  ul.link-list, ul.post-list
     padding: 0
     @extend .clearfix
 
-  li.post-list-item
+  li.link-list-item, li.post-list-item
     display: block
     list-style: none
     margin: 10px auto
@@ -60,6 +60,11 @@ main
     a
       display: block
       font-size: 14px
+
+  li.link-list-item
+    .link-description
+      color: #999
+      padding-left: 25px
 
 article
   p

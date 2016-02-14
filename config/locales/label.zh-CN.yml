@@ -21,8 +21,13 @@ zh-CN:
   activerecord:
     models:
       post: '日志'
+      link: '友情链接'
       admin: '管理账户'
     attributes:
+      link:
+        url: '链接'
+        title: '链接名'
+        description: '简短描述'
       admin:
         email: 'Email'
         nickname: '昵称'
