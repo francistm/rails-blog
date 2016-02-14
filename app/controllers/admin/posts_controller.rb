@@ -56,6 +56,7 @@ class Admin::PostsController < AdminController
       :title,
       :content,
       :published_at,
+      upload_ids: []
     )
   end
 end

@@ -12,12 +12,22 @@ class Admin::UploadsController < AdminController
     @upload.admin = current_admin
     @upload.attributes = upload_params
 
-    if @upload.valid? && @upload.save
-      flash[:success] = t 'admin/uploads.create_success', filename: @upload.file_file_name
-      redirect_to [:admin, :uploads] and return
-    end
+    respond_to do |format|
+      if @upload.valid? && @upload.save
+        format.js
+        format.html do
+          flash[:success] = t 'admin/uploads.create_success', filename: @upload.file_file_name
+          redirect_to [:admin, :uploads]
+        end
 
-    render action: :new
+      else
+        format.js
+        format.html do
+          flash[:danger] = @upload.errors.full_messages
+          render action: :new
+        end
+      end
+    end
   end
 
   def index

@@ -1,4 +1,4 @@
-<%= form_for [:admin, post] do |f| %>
+<%= form_for [:admin, post], html: { :'data-admin-post-form' => '' } do |f| %>
   <div class="form-group">
     <%= f.label :slug %>
     <%= f.text_field :slug, class: 'form-control' %>
@@ -14,6 +14,33 @@
     <div>
       <%= f.date_select :published_at, { default: Time.now }, class: 'form-control form-control-date-select' %>
     </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :uploads %>
+    <table id="uploads-table" class="table">
+      <thead>
+        <tr>
+          <td>#</td>
+          <td>文件名</td>
+          <td>文件大小</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: 'admin/posts/upload', collection: post.uploads %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="text-right" colspan="4">
+            <span class="btn btn-primary btn-file-upload">
+              <span>上传文件</span>
+              <input id="file-add-btn" class="file-hidden-input" type="file" />
+            </span>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
   </div>
 
   <div class="form-group">

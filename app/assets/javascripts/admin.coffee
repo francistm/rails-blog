@@ -4,3 +4,77 @@
 //= require bootstrap-sprockets
 //= require nprogress
 //= require nprogress-turbolinks
+//= require underscore.min
+//= require jquery.fileupload
+//= require jquery.plugins
+
+class App
+  render: ->
+    _.each @pages, (page, index, pages) ->
+      page.render()
+  unload: ->
+    _.each @pages, (page, index, pages) ->
+      page.unload()
+
+  addPage: (page) ->
+    @pages.push page
+
+  constructor: ->
+    @pages = []
+
+class Page
+  render: ->
+    this.renderPage() if $(@selector).length > 0
+  unload: ->
+    this.unloadPage() if @rendered
+
+  renderPage: ->
+    @rendered = true
+  unloadPage: ->
+    @rendered = false
+
+  constructor: (@selector) ->
+    @rendered = false
+
+class AdminPostPage extends Page
+  renderPage: ->
+    super
+    $("#file-add-btn").fileupload({
+      type: 'POST'
+      formData: {}
+      url: '/admin/uploads.js'
+      paramName: 'upload[file]'
+    })
+
+    $(@selector).on 'click', '[data-markdown-url]', (e) ->
+      tpl = _.template('<<%= url %>>')
+      url = $(e.target).attr 'data-url'
+
+      $("#post_content").insertAtCaret tpl(url: url)
+
+    $(@selector).on 'click', '[data-markdown-image]', (e) ->
+      tpl = _.template('![](<%= url %>)')
+      url = $(e.target).attr 'data-url'
+
+      $("#post_content").insertAtCaret tpl(url: url)
+
+  unloadPage: ->
+    super
+    $("#file-add-btn").fileupload('destroy')
+    $(@selector).off 'click', '[data-markdown-url]'
+    $(@selector).off 'click', '[data-markdown-image]'
+
+
+app = new App()
+app.addPage new AdminPostPage('[data-admin-post-form]')
+
+init = ->
+  app.render()
+
+destruct = ->
+  app.unload()
+
+
+$(document).ready init
+$(document).on 'page:load', init
+$(document).on 'page:before-change', destruct

@@ -5,5 +5,7 @@ class Post < ActiveRecord::Base
   validates :slug, uniqueness: { case_sensitive: false }, presence: true
 
   belongs_to :admin
-  has_many :uploads, as: :attachable
+  has_many :uploads, as: :attachable, dependent: :destroy
+
+  accepts_nested_attributes_for :uploads
 end
