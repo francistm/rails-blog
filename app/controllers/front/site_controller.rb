@@ -1,7 +1,7 @@
 module Front
   class SiteController < FrontController
     def feed
-      @posts = Post.order(id: :desc).limit(5).all
+      @posts = Post.order(published_at: :desc).limit(5).all
 
       respond_to do |format|
         format.xml
