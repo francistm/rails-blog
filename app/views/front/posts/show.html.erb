@@ -7,10 +7,10 @@
 
   <div class="page-meta">
     发表于 <%= l @post.published_at %>，
-    最后更新 <%=l @post.updated_at.to_date %>
+    最后更新 <%= l @post.updated_at.to_date %>
   </div>
 
   <div class="content markdown">
-    <%= sanitize parse_markdown @post.content %>
+    <%= sanitize parse_markdown(@post.content), attributes: %w(rel href style class) %>
   </div>
 </article>

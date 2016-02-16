@@ -11,7 +11,11 @@ Rails.application.routes.draw do
     resources :jekyll_imports, only: [:new, :create]
   end
 
+  devise_for :admins, path: 'admin', module: :admin
+
   namespace :front, path: '' do
+    get 'feed', to: 'site#feed', defaults: { format: 'xml' }
+
     resources :links, only: :index
     resources :posts, path: 'entries', param: :slug, only: :show do
       get 'archive', action: :index, on: :collection
@@ -19,5 +23,4 @@ Rails.application.routes.draw do
   end
 
   root to: 'front/site#index'
-  devise_for :admins, path: 'admin', module: :admin
 end
