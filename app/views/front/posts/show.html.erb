@@ -11,6 +11,6 @@
   </div>
 
   <div class="content markdown">
-    <%= sanitize parse_markdown(@post.content), attributes: %w(rel href style class) %>
+    <%= sanitize parse_markdown(@post.content), attributes: %w(rel src href style class) %>
   </div>
 </article>
