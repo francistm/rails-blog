@@ -3,8 +3,8 @@ default: &default
   encoding: utf8
   adapter: mysql2
   host: 127.0.0.1
-  username: root
-  password: 123456
+  username: <%= ENV['DB_USERNAME'] || 'root' %>
+  password: <%= ENV['DB_PASSWORD'] || '123456' %>
 
 development:
   <<: *default
