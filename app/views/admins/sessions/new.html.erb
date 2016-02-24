@@ -1,6 +1,6 @@
 <% provide(:page_title, t('admin/sessions.new')) %>
 
-<%= form_for @admin, url: admins_session_path do |f| %>
+<%= form_for @admin, url: [:admin, :session] do |f| %>
 
   <div class="form-group">
     <%= f.label :email %>
