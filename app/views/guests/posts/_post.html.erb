@@ -1,5 +1,5 @@
 <li class="post-list-item">
-  <%= link_to front_post_path(post.slug), class: 'clearfix' do %>
+  <%= link_to guests_post_path(post.slug), class: 'clearfix' do %>
     <div class="pull-left"><%= post.title %></div>
     <div class="pull-right page-meta"><%= l post.published_at %></div>
   <% end %>

@@ -3,7 +3,7 @@
   <td><%= link.title %></td>
   <td><%= link_to link.url %></td>
   <td>
-    <%= link_to '编辑', [:edit, :admin, link], class: 'btn btn-default' %>
-    <%= link_to '删除', [:admin, link], method: :delete, class: 'btn btn-danger' %>
+    <%= link_to '编辑', [:edit, :admins, link], class: 'btn btn-default' %>
+    <%= link_to '删除', [:admins, link], method: :delete, class: 'btn btn-danger' %>
   </td>
 </tr>

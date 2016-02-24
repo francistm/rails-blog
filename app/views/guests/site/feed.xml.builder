@@ -12,8 +12,8 @@ xml.rss :version => "2.0" do
         xml.title post.try(:title)
         xml.author post.admin.nickname
         xml.pubDate post.published_at.to_s(:rfc822)
-        xml.link front_post_url(post.slug)
-        xml.guid front_post_url(post.slug)
+        xml.link guests_post_url(post.slug)
+        xml.guid guests_post_url(post.slug)
         xml.description parse_markdown(post.content)
       end
     end

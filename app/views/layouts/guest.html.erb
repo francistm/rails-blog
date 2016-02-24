@@ -9,16 +9,16 @@
 
     <%= SiteSetting.site_name %>
   </title>
-  <%= stylesheet_link_tag 'front', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'front', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'guests', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'guests', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="alternate" type="application/rss+xml" title="<%= SiteSetting.site_name %>" href="<%= front_feed_url %>">
+  <link rel="alternate" type="application/rss+xml" title="<%= SiteSetting.site_name %>" href="<%= guests_feed_url %>">
 </head>
 <body>
   <div class="container">
     <div class="clearfix">
-      <nav class="pull-left"><%= render partial: 'navigator/front_navbar' %></nav>
+      <nav class="pull-left"><%= render partial: 'navigator/guest_navbar' %></nav>
       <main class="pull-right"><%= yield %></main>
     </div>
   </div>

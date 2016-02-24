@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     resources :jekyll_imports, only: [:new, :create]
   end
 
-  devise_for :admins, path: 'admin', module: :admins
+  devise_for :admins, path: 'admins', module: :admins
 
   namespace :guests, path: '' do
     get 'feed', to: 'site#feed', defaults: { format: 'xml' }

@@ -1,12 +1,12 @@
 <tr>
   <td><%= upload.id %></td>
-  <td><%= upload.try(:admin).try(:nickname) %></td>
-  <td><%= link_to_if upload.attachable, upload.attachable.try(:title), [:edit, :admin, upload.attachable] %></td>
+  <td><%= upload.try(:admins).try(:nickname) %></td>
+  <td><%= link_to_if upload.attachable, upload.attachable.try(:title), [:edit, :admins, upload.attachable] %></td>
   <td><%= upload.file_file_name %></td>
   <td><%= number_to_human_size upload.file_file_size %></td>
   <td>
-    <%= link_to '查看', [:admin, upload], class: 'btn btn-primary' %>
-    <%= link_to '编辑', [:edit, :admin, upload], class: 'btn btn-default' %>
-    <%= link_to '删除', [:admin, upload], method: :delete, class: 'btn btn-danger' %>
+    <%= link_to '查看', [:admins, upload], class: 'btn btn-primary' %>
+    <%= link_to '编辑', [:edit, :admins, upload], class: 'btn btn-default' %>
+    <%= link_to '删除', [:admins, upload], method: :delete, class: 'btn btn-danger' %>
   </td>
 </tr>
