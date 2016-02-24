@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Admin do
+RSpec.describe Admin, type: :model do
   before :each do
     @password = '12345678'
     @admin = build(

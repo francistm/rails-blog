@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Post do
+RSpec.describe Post, type: :model do
   it 'valid when has slug, title, content, admin_id' do
     expect(build :post).to be_valid
   end

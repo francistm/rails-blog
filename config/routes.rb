@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  namespace :admin do
+  namespace :admins do
     get '', to: 'dashboard#index', as: :dashboard
 
     get 'settings', to: 'settings#index', as: :settings
@@ -11,9 +11,9 @@ Rails.application.routes.draw do
     resources :jekyll_imports, only: [:new, :create]
   end
 
-  devise_for :admins, path: 'admin', module: :admin
+  devise_for :admins, path: 'admin', module: :admins
 
-  namespace :front, path: '' do
+  namespace :guests, path: '' do
     get 'feed', to: 'site#feed', defaults: { format: 'xml' }
 
     resources :links, only: :index
@@ -22,5 +22,5 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: 'front/site#index'
+  root to: 'guests/site#index'
 end

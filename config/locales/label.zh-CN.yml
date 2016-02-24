@@ -4,6 +4,7 @@ zh-CN:
       admin:
       site_setting:
         site_name: '站点名称'
+        feed_output_count: 'Feed 日志输出数量'
     submit:
       update: '更新%{model}'
       sessions:
