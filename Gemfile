@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.2.2'
+
 gem 'figaro'
 gem 'mysql2'
 gem 'turbolinks'
@@ -28,6 +30,7 @@ end
 
 group :test do
   gem 'simplecov', require: false
+  gem 'coveralls', require: false
 end
 
 group :production do
