@@ -1,7 +1,5 @@
 # Tiny Blog by Ruby on Rails
 
----
-
 [![Build Status](https://travis-ci.org/francistm/rails-blog.svg?branch=master)](https://travis-ci.org/francistm/rails-blog)
 [![Coverage Status](https://coveralls.io/repos/github/francistm/rails-blog/badge.svg?branch=master)](https://coveralls.io/github/francistm/rails-blog?branch=master)
 
