@@ -5,9 +5,9 @@ Rails.application.routes.draw do
     get 'settings', to: 'settings#index', as: :settings
     put 'settings', to: 'settings#update'
 
-    resources :uploads
     resources :links, except: :show
     resources :posts, except: :show
+    resources :uploads, except: [:edit, :update]
     resources :jekyll_imports, only: [:new, :create]
   end
 

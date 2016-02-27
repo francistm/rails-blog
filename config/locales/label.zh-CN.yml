@@ -24,19 +24,22 @@ zh-CN:
       post: '日志'
       link: '友情链接'
       admin: '管理账户'
+      upload: '附件'
     attributes:
       link:
         url: '链接'
         title: '链接名'
         description: '简短描述'
-      admin:
-        email: 'Email'
-        nickname: '昵称'
-        password: '密码'
-        password_confirmation: '确认密码'
       post:
         slug: 'Slug'
         title: '标题'
         content: '正文'
         uploads: '关联文件'
         published_at: '发布时间'
+      admin:
+        email: 'Email'
+        nickname: '昵称'
+        password: '密码'
+        password_confirmation: '确认密码'
+      upload:
+        file: '附件文件'
