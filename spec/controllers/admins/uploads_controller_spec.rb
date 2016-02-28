@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe Admins::UploadsController do
+  before :all do
+    skip if ENV["SKIP_QINIU_UPLOAD"] == "true"
+  end
+
   before :each do
     sign_in create(:admin)
   end

@@ -2,6 +2,11 @@ language: ruby
 
 rvm:
   - 2.2.2
+  - 2.2.3
+
+env:
+  - SKIP_QINIU_UPLOAD=true
+  - SKIP_QINIU_UPLOAD=false
 
 script:
   - bundle exec rspec ./spec
@@ -14,3 +19,8 @@ before_script:
   - export DB_PASSWORD=""
   - mysql -e 'CREATE DATABASE IF NOT EXISTS rails_blog_test;' -uroot
   - RAILS_ENV=test bundle exec rake db:schema:load
+
+matrix:
+  allow_failures:
+    - rvm: 2.2.3
+    - env: SKIP_QINIU_UPLOAD=false
