@@ -42,11 +42,15 @@ class AdminPostPage extends Page
     $("#file-add-btn").fileupload({
       type: 'POST'
       formData: {}
-      url: '/admin/uploads.js'
+      url: '/admins/uploads.js'
       paramName: 'upload[file]'
       change: (e, data) ->
         $("#file-add-btn").parent().addClass('disabled')
         $("#file-add-btn").siblings('.btn-text').html('上传中')
+      error: (xhr, status, error) ->
+        alert "文件上传失败，请重试"
+        $("#file-add-btn").parent().removeClass('disabled')
+        $("#file-add-btn").siblings('.btn-text').html('选择文件')
       success: (result, status, xhr) ->
         $("#file-add-btn").parent().removeClass('disabled')
         $("#file-add-btn").siblings('.btn-text').html('选择文件')
