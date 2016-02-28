@@ -9,11 +9,11 @@
 
     <%= SiteSetting.site_name %>
   </title>
+  <%= csrf_meta_tags %>
   <%= stylesheet_link_tag 'guests', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'guests', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+  <%= auto_discovery_link_tag :rss, guests_feed_url, title: SiteSetting.site_name %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="alternate" type="application/rss+xml" title="<%= SiteSetting.site_name %>" href="<%= guests_feed_url %>">
 </head>
 <body>
   <div class="container">

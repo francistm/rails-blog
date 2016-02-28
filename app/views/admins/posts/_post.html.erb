@@ -1,4 +1,4 @@
-<tr>
+<%= content_tag_for :tr, post do %>
   <td class="hidden-xs"><%= post.id %></td>
   <td class="hidden-xs"><%= post.slug %></td>
   <td><%= post.title %></td>
@@ -14,4 +14,4 @@
       <%= link_to '编辑', [:edit, :admins, post] %>
     </div>
   </td>
-</tr>
+<% end %>

@@ -1,6 +1,6 @@
-<li class="post-list-item">
+<%= content_tag_for(:li, post, class: 'post-list-item') do %>
   <%= link_to guests_post_path(post.slug), class: 'clearfix' do %>
     <div class="pull-left"><%= post.title %></div>
     <div class="pull-right page-meta"><%= l post.published_at %></div>
   <% end %>
-</li>
+<% end %>
