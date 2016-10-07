@@ -3,7 +3,7 @@ require 'rails_helper'
 
 describe Admins::SettingsController do
   before :each do
-    sign_in create(:admin)
+    sign_in create(:admin), scope: :admin
   end
 
   describe 'GET #index' do

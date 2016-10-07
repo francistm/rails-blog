@@ -3,7 +3,7 @@ require 'rails_helper'
 
 describe Admins::LinksController do
   before :each do
-    sign_in :admin, create(:admin)
+    sign_in create(:admin), scope: :admin
   end
 
   describe 'GET #new' do
@@ -19,7 +19,7 @@ describe Admins::LinksController do
     end
 
     it 'render :edit template' do
-      get :edit, id: @link.id
+      get :edit, params: {id: @link.id}
       expect(response).to render_template :edit
     end
 
@@ -39,14 +39,14 @@ describe Admins::LinksController do
 
   describe 'POST #create' do
     it 'redirect if create success' do
-      post :create, link: attributes_for(:link)
+      post :create, params: {link: attributes_for(:link)}
 
       expect(flash[:success]).not_to be_blank
       expect(response).to redirect_to [:admins, :links]
     end
 
     it 'render :new if url blank' do
-      post :create, link: attributes_for(:link, url: '')
+      post :create, params: {link: attributes_for(:link, url: '')}
 
       expect(flash.now[:danger]).not_to be_blank
       expect(response).to render_template :new

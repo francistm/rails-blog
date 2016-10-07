@@ -5,7 +5,6 @@
 
 - DEMO: <http://blog.francistm.com>
 - Requirements
-  - use [Vagrant](https://www.vagrantup.com/) to build dev env
   - use [Qiniu](http://qiniu.com/) to storage uploaded images
 - Deployment on Heroku
   - use `ClearDB MySQL` addon as database

@@ -39,13 +39,13 @@ describe Admins::SessionsController do
 
   describe 'DELETE #destroy' do
     it 'has :success flash if logout success' do
-      sign_in :admin, create(:admin)
+      sign_in create(:admin), scope: :admin
       delete :destroy
       expect(flash[:success]).not_to be_blank
     end
 
     it 'redirect to #new action if logout success' do
-      sign_in :admin, create(:admin)
+      sign_in create(:admin), scope: :admin
       delete :destroy
       expect(response).to redirect_to [:new, :admin, :session]
     end

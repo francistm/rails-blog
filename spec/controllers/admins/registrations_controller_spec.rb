@@ -3,7 +3,7 @@ require 'rails_helper'
 
 describe Admins::RegistrationsController do
   before :each do
-    sign_in :admin, create(:admin)
+    sign_in create(:admin), scope: :admin
   end
 
   describe 'GET #edit' do
