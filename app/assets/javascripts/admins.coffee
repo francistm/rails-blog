@@ -78,13 +78,10 @@ class AdminPostPage extends Page
 app = new App()
 app.addPage new AdminPostPage('[data-admin-post-form]')
 
-init = ->
+document.addEventListener('turbolinks:load', () =>
   app.render()
+)
 
-destruct = ->
+document.addEventListener('turbolinks:before-visit', () =>
   app.unload()
-
-
-$(document).ready init
-$(document).on 'page:load', init
-$(document).on 'page:before-change', destruct
+)

@@ -6,7 +6,7 @@ describe Admins::UploadsController do
   end
 
   before :each do
-    sign_in create(:admin)
+    sign_in create(:admin), scope: :admin
   end
 
   describe 'GET #new' do
@@ -53,19 +53,21 @@ describe Admins::UploadsController do
 
   describe 'POST #create' do
     it 'render :new if create failed by html' do
-      post :create, upload: attributes_for(:upload_with_non_image)
+      post :create, params: {
+          upload: attributes_for(:upload_with_non_image)
+      }
       expect(response).to render_template :new
       expect(flash.now[:danger]).not_to be_blank
     end
 
     it 'render js template if succeed by js' do
-      post :create, upload: attributes_for(:upload_with_image), format: :js
+      post :create, params: {upload: attributes_for(:upload_with_image)}, format: :js
       expect(response).to render_template :create
       assigns(:upload).destroy
     end
 
     it 'redirect to admin/uploads#index if succeed by html' do
-      post :create, upload: attributes_for(:upload_with_image)
+      post :create, params: {upload: attributes_for(:upload_with_image)}
       expect(response).to redirect_to [:admins, :uploads]
       assigns(:upload).destroy
     end

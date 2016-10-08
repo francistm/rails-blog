@@ -4,12 +4,10 @@ class Admins::JekyllImportsController < AdminController
   end
 
   def create
-    @jekyll_import = JekyllImport.new
-    @jekyll_import.attributes = jekyll_import_params
+    @jekyll_import = JekyllImport.new jekyll_import_params
 
     if @jekyll_import.valid?
-      post = Post.new
-      post.admin = current_admin
+      post = Post.new admin: current_admin
       post.attributes = @jekyll_import.parse
 
       if post.valid? && post.save

@@ -1,8 +1,10 @@
 require 'rails_helper'
+require Rails.root.join('app/importer/jekyll')
+require Rails.root.join('app/importer/jekyll_parser')
 
 describe Admins::JekyllImportsController do
   before :each do
-    sign_in :admin, create(:admin)
+    sign_in create(:admin), scope: :admin
   end
 
   describe 'GET #new' do
@@ -15,8 +17,10 @@ describe Admins::JekyllImportsController do
   describe 'POST #create' do
     it 'redirect if jekyll import succeed' do
       p = Proc.new {
-        post :create, jekyll_import: {
-          post: fixture_file_upload('files/2012-06-29-jekyll_post.md', 'text/plain')
+        post :create, params: {
+            jekyll_import: {
+                post: fixture_file_upload('files/2012-06-29-jekyll_post.md', 'text/plain')
+            }
         }
       }
 
@@ -26,8 +30,10 @@ describe Admins::JekyllImportsController do
     end
 
     it 'render :new view if import file invalid' do
-      post :create, jekyll_import: {
-        post: fixture_file_upload('files/2012-06-29-jekyll_post_invalid.md', 'text/plain')
+      post :create, params: {
+          jekyll_import: {
+              post: fixture_file_upload('files/2012-06-29-jekyll_post_invalid.md', 'text/plain')
+          }
       }
 
       expect(response).to render_template :new
@@ -35,7 +41,9 @@ describe Admins::JekyllImportsController do
     end
 
     it 'render :new view if no import file uploaded' do
-      post :create, jekyll_import: { post: nil }
+      post :create, params: {
+          jekyll_import: {post: nil}
+      }
 
       expect(flash[:danger]).not_to be_blank
       expect(response).to render_template :new
