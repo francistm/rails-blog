@@ -7,13 +7,13 @@ describe Guests::PostsController do
 
   describe 'GET #show' do
     it 'render :show view' do
-      get :show, slug: @post.slug
+      get :show, params: {slug: @post.slug}
 
       expect(response).to render_template :show
     end
 
     it 'will assign :post variable' do
-      get :show, slug: @post.slug
+      get :show, params: {slug: @post.slug}
 
       expect(assigns(:post)).to eq @post
     end

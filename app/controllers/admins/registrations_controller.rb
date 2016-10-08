@@ -15,7 +15,7 @@ class Admins::RegistrationsController < AdminController
     end
 
     if @admin.valid? && @admin.save
-      sign_in @admin, bypass: true if password_changed
+      bypass_sign_in @admin if password_changed
 
       flash[:success] = t 'admin/registrations.admin_update_success'
       redirect_to [:edit, :admin, :registration] and return

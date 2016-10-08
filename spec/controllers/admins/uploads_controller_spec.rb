@@ -53,7 +53,9 @@ describe Admins::UploadsController do
 
   describe 'POST #create' do
     it 'render :new if create failed by html' do
-      post :create, upload: attributes_for(:upload_with_non_image)
+      post :create, params: {
+          upload: attributes_for(:upload_with_non_image)
+      }
       expect(response).to render_template :new
       expect(flash.now[:danger]).not_to be_blank
     end

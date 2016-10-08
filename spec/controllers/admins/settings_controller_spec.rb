@@ -20,7 +20,9 @@ describe Admins::SettingsController do
         :'2' => { var: 'feed_output_count', value: 15 },
       }
 
-      put :update, settings: { site_setting: put_params }
+      put :update, params: {
+          settings: {site_setting: put_params}
+      }
 
       expect(response).to redirect_to [:admins, :settings]
     end

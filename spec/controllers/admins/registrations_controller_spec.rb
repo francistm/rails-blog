@@ -15,7 +15,9 @@ describe Admins::RegistrationsController do
 
   describe 'PATCH #update' do
     it 'redirect with flash if admin nickname update succeed' do
-      patch :update, admin: { nickname: Faker::Name.name }
+      patch :update, params: {
+          admin: {nickname: Faker::Name.name}
+      }
 
       expect(flash[:success]).not_to be_blank
       expect(response).to redirect_to [:edit, :admin, :registration]
@@ -23,28 +25,36 @@ describe Admins::RegistrationsController do
 
     it 'redirect if admin password update succeed' do
       pwd = '987654321'
-      patch :update, admin: { password: pwd, password_confirmation: pwd }
+      patch :update, params: {
+          admin: {password: pwd, password_confirmation: pwd}
+      }
 
       expect(flash[:success]).not_to be_blank
       expect(response).to redirect_to [:edit, :admin, :registration]
     end
 
     it 'render :edit view if admin profile invalid' do
-      patch :update, admin: { nickname: '' }
+      patch :update, params: {
+          admin: {nickname: ''}
+      }
 
       expect(flash[:danger]).not_to be_blank
       expect(response).to render_template :edit
     end
 
     it 'render :edit view if new password not matched' do
-      patch :update, admin: { password: '12345678', password_confirmation: '87654321' }
+      patch :update, params: {
+          admin: {password: '12345678', password_confirmation: '87654321'}
+      }
 
       expect(flash[:danger]).not_to be_blank
       expect(response).to render_template :edit
     end
 
     it 'render :edit with flash if new password invalid' do
-      patch :update, admin: { password: '123456', password_confirmation: '123456' }
+      patch :update, params: {
+          admin: {password: '123456', password_confirmation: '123456'}
+      }
 
       expect(flash[:danger]).not_to be_blank
       expect(response).to render_template :edit

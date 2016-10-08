@@ -16,7 +16,7 @@ describe Admins::SessionsController do
         password: Faker::Internet.password,
       }
 
-      post :create, admin: login_token
+      post :create, params: {admin: login_token}
       expect(flash[:danger]).to be_present
     end
 
@@ -26,13 +26,15 @@ describe Admins::SessionsController do
         password: Faker::Internet.password,
       }
 
-      post :create, admin: login_token
+      post :create, params: {admin: login_token}
       expect(response).to redirect_to [:new, :admin, :session]
     end
 
     it 'redirect to admin/dashboard#index if login success' do
       admin = create(:admin)
-      post :create, admin: { email: admin.email, password: '12345678' }
+      post :create, params: {
+          admin: {email: admin.email, password: '12345678'}
+      }
       expect(response).to redirect_to root_path
     end
   end
