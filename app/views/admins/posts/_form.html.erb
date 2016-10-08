@@ -1,52 +1,97 @@
-<%= form_for [:admins, post], html: { :'data-admin-post-form' => '' } do |f| %>
-  <div class="form-group">
-    <%= f.label :slug %>
-    <%= f.text_field :slug, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :title %>
-    <%= f.text_field :title, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :published_at %>
-    <div>
-      <%= f.date_select :published_at, { default: Time.now }, class: 'form-control form-control-date-select' %>
+<%= form_for [:admins, post] do |f| %>
+    <div class="form-group">
+      <%= f.label :slug %>
+      <%= f.text_field :slug, class: 'form-control' %>
     </div>
-  </div>
 
-  <div class="form-group">
-    <%= f.label :uploads %>
-    <table id="uploads-table" class="table">
-      <thead>
+    <div class="form-group">
+      <%= f.label :title %>
+      <%= f.text_field :title, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :published_at %>
+      <div>
+        <%= f.date_select :published_at, {default: Time.now}, class: 'form-control form-control-date-select' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :uploads %>
+      <table id="uploads-table" class="table">
+        <thead>
         <tr>
           <td>#</td>
           <td>文件名</td>
           <td>文件大小</td>
           <td></td>
         </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         <%= render partial: 'admins/posts/upload', collection: post.uploads %>
-      </tbody>
-      <tfoot>
+        </tbody>
+        <tfoot>
         <tr>
           <td class="text-right" colspan="4">
             <span class="btn btn-primary btn-file-upload">
               <span class="btn-text">上传文件</span>
-              <input id="file-add-btn" class="file-hidden-input" type="file" />
+              <input id="file-add-btn" class="file-hidden-input" type="file"/>
             </span>
           </td>
         </tr>
-      </tfoot>
-    </table>
-  </div>
+        </tfoot>
+      </table>
+    </div>
 
-  <div class="form-group">
-    <%= f.label :content %>
-    <%= f.text_area :content, class: 'form-control', rows: 20 %>
-  </div>
+    <div class="form-group">
+      <%= f.label :content %>
+      <%= f.text_area :content, class: 'form-control', rows: 20 %>
+    </div>
 
-  <%= f.submit class: 'btn btn-primary' %>
+    <%= f.submit class: 'btn btn-primary' %>
 <% end %>
+
+<script type="text/javascript" charset="utf-8">
+  document.addEventListener('turbolinks:load', function () {
+    var fileAddBtn = $("#file-add-btn");
+    var postTextArea = $("#post_content");
+
+    fileAddBtn.fileupload({
+      type: 'POST',
+      formData: {},
+      url: '/admins/uploads.js',
+      paramName: 'upload[file]',
+      change: function (e, data) {
+        fileAddBtn.parent().addClass('disabled');
+        fileAddBtn.siblings('.btn-text').html('上传中');
+      },
+      error: function (xhr, status, error) {
+        alert("文件上传失败，请重试");
+        fileAddBtn.parent().removeClass('disabled');
+        fileAddBtn.siblings('.btn-text').html('选择文件');
+      },
+      success: function (result, status, xhr) {
+        fileAddBtn.parent().removeClass('disabled');
+        fileAddBtn.siblings('.btn-text').html('选择文件');
+      }
+    });
+
+    $(document).on('click', '[data-markdown-url]', function (e) {
+      var tpl = _.template('<<%%= url %>>');
+      var url = $(e.target).attr('data-url');
+
+      postTextArea.insertAtCaret(tpl({ url: url }));
+    });
+
+    $(document).on('click', '[data-markdown-image]', function (e) {
+      var tpl = _.template('![](<%%= url %>)');
+      var url = $(e.target).attr('data-url');
+
+      postTextArea.insertAtCaret(tpl({ url: url }));
+    });
+  });
+
+  document.addEventListener('', function () {
+    $("#file-add-btn").fileupload('destroy');
+  });
+</script>
