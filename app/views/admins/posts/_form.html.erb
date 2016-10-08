@@ -12,7 +12,7 @@
     <div class="form-group">
       <%= f.label :published_at %>
       <div>
-        <%= f.date_select :published_at, {default: Time.now}, class: 'form-control form-control-date-select' %>
+        <%= f.date_select :published_at, { default: Time.now }, class: 'form-control form-control-date-select' %>
       </div>
     </div>
 
@@ -34,7 +34,7 @@
         <tr>
           <td class="text-right" colspan="4">
             <span class="btn btn-primary btn-file-upload">
-              <span class="btn-text">上传文件</span>
+              <span class="btn-text">选择文件</span>
               <input id="file-add-btn" class="file-hidden-input" type="file"/>
             </span>
           </td>
@@ -54,7 +54,10 @@
 <script type="text/javascript" charset="utf-8">
   document.addEventListener('turbolinks:load', function () {
     var fileAddBtn = $("#file-add-btn");
-    var postTextArea = $("#post_content");
+    var postContentTextArea = $("#post_content");
+
+    var fileAddBtnParent = fileAddBtn.parent();
+    var fileAddBtnSibling = fileAddBtn.siblings('.btn-text');
 
     fileAddBtn.fileupload({
       type: 'POST',
@@ -62,17 +65,17 @@
       url: '/admins/uploads.js',
       paramName: 'upload[file]',
       change: function (e, data) {
-        fileAddBtn.parent().addClass('disabled');
-        fileAddBtn.siblings('.btn-text').html('上传中');
+        fileAddBtnSibling.html('上传中');
+        fileAddBtnParent.addClass('disabled');
       },
       error: function (xhr, status, error) {
         alert("文件上传失败，请重试");
-        fileAddBtn.parent().removeClass('disabled');
-        fileAddBtn.siblings('.btn-text').html('选择文件');
+        fileAddBtnSibling.html('选择文件');
+        fileAddBtnParent.removeClass('disabled');
       },
       success: function (result, status, xhr) {
-        fileAddBtn.parent().removeClass('disabled');
-        fileAddBtn.siblings('.btn-text').html('选择文件');
+        fileAddBtnSibling.html('选择文件');
+        fileAddBtnParent.removeClass('disabled');
       }
     });
 
@@ -80,18 +83,21 @@
       var tpl = _.template('<<%%= url %>>');
       var url = $(e.target).attr('data-url');
 
-      postTextArea.insertAtCaret(tpl({ url: url }));
+      postContentTextArea.insertAtCaret(tpl({ url: url }));
     });
 
     $(document).on('click', '[data-markdown-image]', function (e) {
       var tpl = _.template('![](<%%= url %>)');
       var url = $(e.target).attr('data-url');
 
-      postTextArea.insertAtCaret(tpl({ url: url }));
+      postContentTextArea.insertAtCaret(tpl({ url: url }));
     });
   });
 
   document.addEventListener('', function () {
     $("#file-add-btn").fileupload('destroy');
+
+    $(document).off('click', '[data-markdown-url]');
+    $(document).off('click', '[data-markdown-image]');
   });
 </script>
