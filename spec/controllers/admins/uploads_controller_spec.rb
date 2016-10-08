@@ -26,12 +26,12 @@ describe Admins::UploadsController do
     end
 
     it 'render :show template' do
-      get :show, id: @upload.id
+      get :show, params: {id: @upload.id}
       expect(response).to render_template :show
     end
 
     it 'assign :upload instance' do
-      get :show, id: @upload.id
+      get :show, params: {id: @upload.id}
       expect(assigns(:upload)).to eq @upload
     end
   end
@@ -61,13 +61,17 @@ describe Admins::UploadsController do
     end
 
     it 'render js template if succeed by js' do
-      post :create, params: {upload: attributes_for(:upload_with_image)}, format: :js
+      post :create, params: {
+          upload: attributes_for(:upload_with_image)
+      }, format: :js
       expect(response).to render_template :create
       assigns(:upload).destroy
     end
 
     it 'redirect to admin/uploads#index if succeed by html' do
-      post :create, params: {upload: attributes_for(:upload_with_image)}
+      post :create, params: {
+          upload: attributes_for(:upload_with_image)
+      }
       expect(response).to redirect_to [:admins, :uploads]
       assigns(:upload).destroy
     end
@@ -76,13 +80,13 @@ describe Admins::UploadsController do
   describe 'DELETE #destroy' do
     it 'reduct uploads count' do
       upload = create(:upload_with_image)
-      p = Proc.new { delete :destroy, id: upload.id }
+      p = Proc.new { delete :destroy, params: {id: upload.id} }
       expect(p).to change(Upload, :count).by -1
     end
 
     it 'redirect to admin/uploads#index' do
       upload = create(:upload_with_image)
-      delete :destroy, id: upload.id
+      delete :destroy, params: {id: upload.id}
       expect(response).to redirect_to [:admins, :uploads]
     end
   end
