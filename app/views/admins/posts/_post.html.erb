@@ -1,17 +1,17 @@
 <%= content_tag_for :tr, post do %>
-  <td class="hidden-xs"><%= post.id %></td>
-  <td class="hidden-xs"><%= post.slug %></td>
-  <td><%= post.title %></td>
-  <td class="hidden-xs"><%= l post.published_at, format: :short %></td>
-  <td>
-    <div class="hidden-xs">
-      <%= link_to '查看', guests_post_path(post.slug), class: 'btn btn-primary' %>
-      <%= link_to '编辑', edit_admins_post_path(post), class: 'btn btn-default' %>
-      <%= link_to '删除', admins_post_path(post), method: :delete, class: 'btn btn-danger' %>
-    </div>
+    <td class="hidden-xs"><%= post.id %></td>
+    <td class="hidden-xs"><%= post.slug %></td>
+    <td><%= post.title %></td>
+    <td class="hidden-xs"><%= l post.published_at, format: :short %></td>
+    <td>
+      <div class="hidden-xs">
+        <%= link_to '查看', guests_post_path(post.slug), class: 'btn btn-primary', data: { turbolinks: false } %>
+        <%= link_to '编辑', edit_admins_post_path(post), class: 'btn btn-default' %>
+        <%= link_to '删除', admins_post_path(post), method: :delete, class: 'btn btn-danger' %>
+      </div>
 
-    <div class="visible-xs-block">
-      <%= link_to '编辑', [:edit, :admins, post] %>
-    </div>
-  </td>
+      <div class="visible-xs-block">
+        <%= link_to '编辑', [:edit, :admins, post] %>
+      </div>
+    </td>
 <% end %>

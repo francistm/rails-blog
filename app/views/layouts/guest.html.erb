@@ -4,23 +4,24 @@
   <meta charset="UTF-8">
   <title>
     <% if content_for?(:page_title) %>
-      <%= yield :page_title %> &laquo;
+        <%= yield :page_title %> &laquo;
     <% end %>
 
     <%= SiteSetting.site_name %>
   </title>
   <%= csrf_meta_tags %>
-  <%= stylesheet_link_tag 'guests', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'guests', 'data-turbolinks-track' => true %>
-  <%= auto_discovery_link_tag :rss, guests_feed_url, title: SiteSetting.site_name %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <%= stylesheet_link_tag 'guests', media: 'all', 'data-turbolinks-track' => 'reload' %>
+  <%= javascript_include_tag 'guests', 'data-turbolinks-track' => 'reload' %>
+  <%= auto_discovery_link_tag :rss, guests_feed_url, title: SiteSetting.site_name %>
 </head>
 <body>
-  <div class="container">
-    <div class="clearfix">
-      <nav class="pull-left"><%= render partial: 'navigator/guest_navbar' %></nav>
-      <main class="pull-right"><%= yield %></main>
-    </div>
+<div class="container">
+  <div class="clearfix">
+    <nav class="pull-left"><%= render partial: 'navigator/guest_navbar' %></nav>
+    <main class="pull-right"><%= yield %></main>
   </div>
+</div>
 </body>
 </html>
