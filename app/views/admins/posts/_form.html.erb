@@ -27,16 +27,18 @@
           <td></td>
         </tr>
         </thead>
+
         <tbody>
         <%= render partial: 'admins/posts/upload', collection: post.uploads %>
         </tbody>
+
         <tfoot>
         <tr>
           <td class="text-right" colspan="4">
-            <span class="btn btn-primary btn-file-upload">
-              <span class="btn-text">选择文件</span>
-              <input id="file-add-btn" class="file-hidden-input" type="file"/>
-            </span>
+              <span class="btn btn-primary btn-file-upload">
+                <span class="btn-text">选择文件</span>
+                <input id="file-add-btn" class="file-hidden-input" type="file"/>
+              </span>
           </td>
         </tr>
         </tfoot>
@@ -94,7 +96,7 @@
     });
   });
 
-  document.addEventListener('', function () {
+  document.addEventListener('turbolinks:before-cache', function () {
     $("#file-add-btn").fileupload('destroy');
 
     $(document).off('click', '[data-markdown-url]');
