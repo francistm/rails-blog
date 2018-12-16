@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.5.3'
 
 gem 'figaro'
 gem 'mysql2'
@@ -10,8 +10,8 @@ gem 'nprogress-rails'
 gem 'normalize-rails'
 gem 'record_tag_helper'
 
-gem 'rails', '5.0.0.1'
-gem 'devise', '~> 4.2.0'
+gem 'rails', '5.2.2'
+gem 'devise', '~> 4.5.0'
 gem 'jbuilder', '~> 2.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'redcarpet', '~> 3.3.4'
@@ -22,9 +22,6 @@ gem 'date_validator', '~> 0.9.0'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'rails-settings-cached', '~> 0.6.5'
 
-gem 'paperclip', '~> 5.1.0'
-gem 'paperclip-qiniu', '~> 0.2.0'
-
 group :doc do
   gem 'sdoc', '~> 0.4.0'
 end
@@ -32,11 +29,6 @@ end
 group :test do
   gem 'simplecov', require: false
   gem 'coveralls', require: false
-end
-
-group :production do
-  gem 'puma', '~> 3.6.0'
-  gem 'rails_12factor', '~> 0.0.3'
 end
 
 group :development do
