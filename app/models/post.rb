@@ -1,4 +1,4 @@
-class Post < ActiveRecord::Base
+class Post < ApplicationRecord
   validates :admin, presence: true
   validates :published_at, date: true
   validates :title, :content, presence: true

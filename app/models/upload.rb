@@ -1,4 +1,4 @@
-class Upload < ActiveRecord::Base
+class Upload < ApplicationRecord
   attr_accessor :file
 
   validates :admin, presence: true
