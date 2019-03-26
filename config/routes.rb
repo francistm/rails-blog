@@ -8,7 +8,6 @@ Rails.application.routes.draw do
     resources :links, except: :show
     resources :posts, except: :show
     resources :uploads, except: [:edit, :update]
-    resources :jekyll_imports, only: [:new, :create]
   end
 
   devise_for :admins, path: 'admins', module: :admins

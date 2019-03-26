@@ -9,6 +9,7 @@ gem 'jquery-rails'
 gem 'nprogress-rails'
 gem 'normalize-rails'
 gem 'record_tag_helper'
+gem 'bootsnap', require: false
 
 gem 'rails', '5.2.2'
 gem 'devise', '~> 4.5.0'
@@ -35,6 +36,7 @@ group :development do
   gem 'i18n-debug'
   gem 'web-console', '~> 3.0'
 
+  gem 'listen'
   gem 'spring'
   gem 'spring-commands-rspec'
 end
@@ -42,7 +44,7 @@ end
 group :test, :development do
   gem 'faker'
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'rails-controller-testing'
 end
 
