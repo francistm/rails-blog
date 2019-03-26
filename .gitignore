@@ -3,6 +3,7 @@
 
 /tmp
 /log
+/.idea
 /.bundle
 /.vagrant
 /coverage
@@ -10,19 +11,6 @@
 /db/*.sqlite3-journal
 /config/application.yml
 
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/**/dictionaries
-.idea/**/shelf
-.idea/**/dataSources/
-.idea/**/dataSources.ids
-.idea/**/dataSources.local.xml
-.idea/**/sqlDataSources.xml
-.idea/**/dynamic.xml
-.idea/**/uiDesigner.xml
-.idea/**/dbnavigator.xml
-.idea/**/gradle.xml
-.idea/**/libraries
 cmake-build-debug/
 cmake-build-release/
 .idea/**/mongoSettings.xml

@@ -12,5 +12,5 @@ services:
 before_script:
   - export DB_USERNAME=root
   - export DB_PASSWORD=""
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS rails_blog_test;' -uroot
-  - RAILS_ENV=test bundle exec rake db:schema:load
+  - RAILS_ENV=test bundle exec rails db:create
+  - RAILS_ENV=test bundle exec rails db:schema:load
