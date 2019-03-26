@@ -1,7 +1,7 @@
 require 'faker'
 
 FactoryBot.define do
-  factory :post, class: Admin do
+  factory :post, class: Post do
     association :admin
 
     slug { Faker::Internet.slug }
