@@ -14,6 +14,7 @@ gem 'bootsnap', require: false
 gem 'rails', '5.2.2'
 gem 'devise', '~> 4.5.0'
 gem 'jbuilder', '~> 2.0'
+gem 'webpacker', '~> 4.x'
 gem 'uglifier', '>= 1.3.0'
 gem 'redcarpet', '~> 3.3.4'
 gem 'sass-rails', '~> 5.0.0'
