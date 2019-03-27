@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.5.3'
 
+gem 'puma'
 gem 'figaro'
 gem 'mysql2'
 gem 'turbolinks'
@@ -22,7 +23,7 @@ gem 'pygments.rb', '~> 0.6.3'
 gem 'coffee-rails', '~> 4.2.0'
 gem 'date_validator', '~> 0.9.0'
 gem 'bootstrap-sass', '~> 3.3.6'
-gem 'rails-settings-cached', '~> 0.6.5'
+gem 'rails-settings-cached', '~> 0.7.0'
 
 group :doc do
   gem 'sdoc', '~> 0.4.0'

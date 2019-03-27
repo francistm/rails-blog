@@ -6,8 +6,9 @@ Rails.application.routes.draw do
     put 'settings', to: 'settings#update'
 
     resources :links, except: :show
-    resources :posts, except: :show
-    resources :uploads, except: [:edit, :update]
+    resources :posts, except: :show do
+      get 'uploads', action: 'uploads'
+    end
   end
 
   devise_for :admins, path: 'admins', module: :admins

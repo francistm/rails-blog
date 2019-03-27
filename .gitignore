@@ -6,6 +6,7 @@
 /.idea
 /.bundle
 /.vagrant
+/storage
 /coverage
 /db/*.sqlite3
 /db/*.sqlite3-journal

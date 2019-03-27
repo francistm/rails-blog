@@ -8,6 +8,9 @@
 .pb20
   padding-bottom: 20px
 
+.mb0
+  margin-bottom: 0
+
 .alert-alert
   @extend .alert-danger
 
@@ -15,17 +18,17 @@
   width: auto
   display: inline-block
 
-.btn.btn-file-upload
-  overflow: hidden
-  position: relative
-
 table#uploads-table
   tbody > tr > td
     vertical-align: middle
 
+.file-hidden-input-container
+  position: relative
+
 input.file-hidden-input
   top: 0
-  right: 0
+  left: 0
   opacity: 0
-  font-size: 200px
+  width: 100%
+  height: 100%
   position: absolute
