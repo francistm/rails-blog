@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
     resources :links, except: :show
     resources :posts, except: :show do
-      get 'uploads', action: 'uploads'
+      resources :uploads, controller: 'posts/uploads', shallow: true, except: [:new, :create]
     end
   end
 

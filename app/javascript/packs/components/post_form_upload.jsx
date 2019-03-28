@@ -1,38 +1,96 @@
 import React from "react"
-import {from, fromEvent} from "rxjs"
-import {map, mergeMap} from "rxjs/operators"
+import {EMPTY, from, fromEvent, of} from "rxjs"
+import {catchError, concatMap, map, mergeMap} from "rxjs/operators"
 import {ajax} from "rxjs/ajax"
 import PropTypes from "prop-types"
 import {DirectUpload} from "activestorage"
 
-const UPLOAD_STATUS_PENDING = 'PENDING'
-const UPLOAD_STATUS_UPLOADED = 'UPLOADED'
+const ajaxGetJSONHeader = {
+  'Content-Type': 'application/json; charset=utf8',
+}
+
+class FileInsert extends CustomEvent {
+  constructor (blobUrl) {
+    super('FileInsert')
+    this._blobUrl = blobUrl
+  }
+
+  get blobUrl () {
+    return this._blobUrl
+  }
+}
+
+class FileDestroyed extends CustomEvent {
+  constructor (signedId) {
+    super('FileDestroyed')
+    this._signedId = signedId
+  }
+
+  get signedId () {
+    return this._signedId
+  }
+}
+
+class FileUploadFailed extends CustomEvent {
+  constructor (file, error) {
+    super('FileUploadFailed')
+    this._file = file
+    this._error = error
+  }
+
+  get file () {
+    return this._file
+  }
+
+  get error () {
+    return this._error
+  }
+}
+
+class FileUploadSucceed extends CustomEvent {
+  constructor (file, signedId) {
+    super('FileUploadSucceed')
+    this._file = file
+    this._signedId = signedId
+  }
+
+  get file () {
+    return this._file
+  }
+
+  get signedId () {
+    return this._signedId
+  }
+}
 
 class UploadFile extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      file: props.file,
+      attachment: props.attachment,
       uploadProgress: 0,
-      uploadStatus: props.uploadStatus,
-      uploadBlogSignedId: "",
     }
+
+    this.uploadEventEmitter = new EventTarget()
+    this.insertButtonHandler = this.insertButtonHandler.bind(this)
   }
 
   static get propTypes() {
     return {
       index: PropTypes.number.isRequired,
-      uploadStatus: PropTypes.oneOf([UPLOAD_STATUS_PENDING, UPLOAD_STATUS_UPLOADED]).isRequired,
       directUploadUrl: PropTypes.string.isRequired,
-      file: PropTypes.oneOfType([
-        PropTypes.instanceOf(File),
-        PropTypes.shape({
-          size: PropTypes.number.isRequired,
-          name: PropTypes.string.isRequired,
-          url: PropTypes.string.isRequired,
-          content_type: PropTypes.string.isRequired,
-        }),
-      ]).isRequired,
+      fileItemEventEmitter: PropTypes.instanceOf(EventTarget),
+
+      file: PropTypes.instanceOf(File),
+      attachment: PropTypes.shape({
+        byteSize: PropTypes.number.isRequired,
+        filename: PropTypes.string.isRequired,
+        isImage: PropTypes.bool.isRequired,
+        signedId: PropTypes.string.isRequired,
+        blobPath: PropTypes.string.isRequired,
+      }),
     }
   }
 
@@ -45,20 +103,56 @@ class UploadFile extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.uploadStatus === UPLOAD_STATUS_PENDING) {
+    if (this.state.file) {
       const directUpload = new DirectUpload(this.props.file, this.props.directUploadUrl, this)
 
       directUpload.create((err, blob) => {
         if (err) {
-          throw err
+          this.uploadEventEmitter.dispatchEvent(new FileUploadFailed(this.state.file, err))
         }
-
-        this.setState({
-          uploadBlogSignedId: blob.signed_id,
-          uploadStatus: UPLOAD_STATUS_UPLOADED,
-        })
+        else {
+          this.uploadEventEmitter.dispatchEvent(new FileUploadSucceed(this.state.file, blob.signed_id))
+        }
       })
     }
+
+    fromEvent(this.uploadEventEmitter, 'FileUploadFailed')
+      .subscribe((event) => {
+      })
+
+    fromEvent(this.uploadEventEmitter, 'FileUploadSucceed')
+      .pipe(
+        concatMap((uploadSucceedEvent) => ajax.getJSON(`/admins/uploads/${uploadSucceedEvent.signedId}`)),
+        map((attachment) => {
+          return {
+            byteSize: attachment.byte_size,
+            filename: attachment.filename,
+            isImage: attachment.is_image,
+            signedId: attachment.signed_id,
+            blobPath: attachment.blob_path,
+          }
+        })
+      )
+      .subscribe((attachment) => {
+        this.setState({
+          file: null,
+          attachment: attachment,
+        })
+      })
+  }
+
+  insertButtonHandler (event, attachment) {
+    const blobUrl = ''
+    this.props.fileItemEventEmitter.dispatchEvent(new FileInsert(blobUrl))
+
+    event.preventDefault()
+  }
+
+  destroyButtonHandler (event, attachment) {
+    const signedId = attachment.signedId
+    this.props.fileItemEventEmitter.dispatchEvent(new FileDestroyed(signedId))
+
+    event.preventDefault()
   }
 
   // Hook for ActionStorage DirectUpload
@@ -72,25 +166,32 @@ class UploadFile extends React.Component {
   }
 
   render() {
-    return <tr>
-      <td>{this.props.index}</td>
-      <td>{this.props.file.name}</td>
-      <td>{this.constructor.formatFileSize(this.props.file.size)}</td>
-      <td>
-        {this.state.uploadStatus === UPLOAD_STATUS_PENDING && (
+    if (this.state.file) {
+      return <tr>
+        <td>{this.props.index}</td>
+        <td>{this.state.file.name}</td>
+        <td>{this.constructor.formatFileSize(this.state.file.size)}</td>
+        <td>
           <div className="progress mb0">
             <div className="progress-bar" style={{width: this.state.uploadProgress * 100 + '%'}}/>
           </div>
-        )}
-
-        {this.state.uploadStatus === UPLOAD_STATUS_UPLOADED && (
+        </td>
+      </tr>
+    }
+    else if (this.state.attachment) {
+      return <tr>
+        <td>{this.props.index}</td>
+        <td>{this.state.attachment.filename}</td>
+        <td>{this.constructor.formatFileSize(this.state.attachment.byteSize)}</td>
+        <td>
           <div>
-            <button className="btn btn-danger">删除</button>
-            <input type="hidden" name="post[uploads][]" value={this.state.uploadBlogSignedId}/>
+            <button onClick={(e) => this.insertButtonHandler(e, this.state.attachment)} className="btn btn-sm btn-default mr10">插入</button>
+            <button onClick={(e) => this.destroyButtonHandler(e, this.state.attachment)} className="btn btn-sm btn-danger">删除</button>
+            <input type="hidden" name="post[uploads][]" value={this.state.attachment.signedId}/>
           </div>
-        )}
-      </td>
-    </tr>
+        </td>
+      </tr>
+    }
   }
 }
 
@@ -103,6 +204,7 @@ export default class PostFormUploadComponent extends React.Component {
       uploadFileListLoading: false,
     }
     this.fileSelector = React.createRef()
+    this.fileItemEventEmitter = new EventTarget()
   }
 
   static get propTypes() {
@@ -116,33 +218,62 @@ export default class PostFormUploadComponent extends React.Component {
     fromEvent(this.fileSelector.current, "change")
       .pipe(
         map((event) => (event.target.files)),
-        mergeMap((fileList) => from(fileList))
+        mergeMap((fileList) => from(fileList)),
+        map((file) => ({file: file}))
       )
-      .subscribe((file) => {
-        const fileList = [].concat(this.state.uploadFileList, [{
-          file: file,
-          uploadStatus: UPLOAD_STATUS_PENDING,
-        }])
-
+      .subscribe((fileStruct) => {
+        const fileList = [].concat(this.state.uploadFileList, [fileStruct])
         this.setState({uploadFileList: fileList})
       })
 
-    if (this.props.postId.length > 0) {
-      const headers = {
-        'Content-Type': 'application/json; charset=utf8',
-      }
+    fromEvent(this.fileItemEventEmitter, "FileDestroyed")
+      .pipe(
+        concatMap((event) => {
+          const headers = {
+            'X-CSRF-Param': $('meta[name="csrf-param"]').attr('content'),
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+          }
+
+          return ajax.delete('/admins/uploads/' + event.signedId, headers).pipe(
+            catchError(() => EMPTY),
+            concatMap(() => of(event))
+          )
+        })
+      )
+      .subscribe((event) => {
+        const removedFileIndex = this.state.uploadFileList.findIndex((uploadFile) => {
+          return uploadFile.attachment.signedId === event.signedId
+        })
+
+        if (removedFileIndex > -1) {
+          const uploadFileList = [].concat(this.state.uploadFileList)
+
+          uploadFileList.splice(removedFileIndex, 1)
+
+          this.setState({uploadFileList: uploadFileList})
+        }
+      })
+
+    if (this.props.postId !== "") {
       const uploadsIndexPath = `/admins/posts/${this.props.postId}/uploads`
 
-      ajax.getJSON(uploadsIndexPath, headers)
+      ajax.getJSON(uploadsIndexPath, ajaxGetJSONHeader)
         .pipe(
           mergeMap((fileList) => from(fileList)),
-          map((remoteFile) => ({
-            file: remoteFile,
-            uploadStatus: UPLOAD_STATUS_UPLOADED,
-          }))
+          map((attachment) => {
+            return {
+              attachment: {
+                byteSize: attachment.byte_size,
+                filename: attachment.filename,
+                isImage: attachment.is_image,
+                signedId: attachment.signed_id,
+                blobPath: attachment.blob_path,
+              }
+            }
+          })
         )
-        .subscribe((remoteFile) => {
-          const fileList = [].concat(this.state.uploadFileList, [remoteFile])
+        .subscribe((fileStruct) => {
+          const fileList = [].concat(this.state.uploadFileList, [fileStruct])
           this.setState({uploadFileList: fileList})
       })
     }
@@ -172,12 +303,14 @@ export default class PostFormUploadComponent extends React.Component {
         </tr>
       )}
 
-      {this.state.uploadFileList.length > 0 && this.state.uploadFileList.map((uploadFile, index) => (
+      {this.state.uploadFileList.length > 0 && this.state.uploadFileList.map((fileStruct, index) => (
         <UploadFile key={index}
                     index={index + 1}
-                    file={uploadFile.file}
-                    uploadStatus={uploadFile.uploadStatus}
-                    directUploadUrl={this.props.directUploadUrl}/>
+                    directUploadUrl={this.props.directUploadUrl}
+                    fileItemEventEmitter={this.fileItemEventEmitter}
+
+                    file={fileStruct.file}
+                    attachment={fileStruct.attachment} />
       ))}
       </tbody>
 

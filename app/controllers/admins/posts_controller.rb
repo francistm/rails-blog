@@ -25,14 +25,6 @@ class Admins::PostsController < AdminController
     render action: :new
   end
 
-  def uploads
-    @post = Post.find params[:post_id]
-
-    respond_to do |format|
-      format.json { render json: @post.uploads.map(&method(:format_attachment))}
-    end
-  end
-
   def update
     @post = Post.find params[:id]
     @post.attributes = post_params
@@ -66,14 +58,5 @@ class Admins::PostsController < AdminController
       :published_at,
       uploads: []
     )
-  end
-
-  def format_attachment (attachment)
-    {}.tap do |h|
-      h[:size] = attachment.byte_size
-      h[:name] = attachment.filename
-      h[:url] = url_for(attachment)
-      h[:content_type] = attachment.content_type
-    end
   end
 end
