@@ -17,6 +17,7 @@ services:
   - mysql
 
 before_script:
+  - export START_XVFB=true
   - export DB_USERNAME=root
   - export DB_PASSWORD=""
   - RAILS_ENV=test bundle exec rails db:create
