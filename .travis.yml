@@ -16,4 +16,4 @@ before_script:
   - export DB_PASSWORD=""
   - RAILS_ENV=test bundle exec rails db:create
   - RAILS_ENV=test bundle exec rails db:schema:load
-  - wget http://chromedriver.storage.googleapis.com/74.0.3729.6/chromedriver_mac64.zip -C /opt && unzip /opt/chromedriver_mac64.zip && mv /opt/chromedriver -t /usr/bin
+  - mkdir /app && wget http://chromedriver.storage.googleapis.com/74.0.3729.6/chromedriver_mac64.zip -P /app && unzip /app/chromedriver_mac64.zip && mv /app/chromedriver -t /usr/bin
