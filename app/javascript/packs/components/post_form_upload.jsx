@@ -10,24 +10,24 @@ const ajaxGetJSONHeader = {
 }
 
 class FileInsert extends CustomEvent {
-  constructor (blobUrl) {
+  constructor (attachment) {
     super('FileInsert')
-    this._blobUrl = blobUrl
+    this._attachment = attachment
   }
 
-  get blobUrl () {
-    return this._blobUrl
+  get attachment () {
+    return this._attachment
   }
 }
 
 class FileDestroyed extends CustomEvent {
-  constructor (signedId) {
+  constructor (attachment) {
     super('FileDestroyed')
-    this._signedId = signedId
+    this._attachment = attachment
   }
 
-  get signedId () {
-    return this._signedId
+  get attachment () {
+    return this._attachment
   }
 }
 
@@ -70,6 +70,7 @@ class UploadFile extends React.Component {
     this.state = {
       file: props.file,
       attachment: props.attachment,
+
       uploadProgress: 0,
     }
 
@@ -85,12 +86,14 @@ class UploadFile extends React.Component {
 
       file: PropTypes.instanceOf(File),
       attachment: PropTypes.shape({
+        id: PropTypes.number.isRequired,
         byteSize: PropTypes.number.isRequired,
         filename: PropTypes.string.isRequired,
         isImage: PropTypes.bool.isRequired,
         signedId: PropTypes.string.isRequired,
         blobPath: PropTypes.string.isRequired,
       }),
+      attachmentPersisted: PropTypes.bool,
     }
   }
 
@@ -122,9 +125,10 @@ class UploadFile extends React.Component {
 
     fromEvent(this.uploadEventEmitter, 'FileUploadSucceed')
       .pipe(
-        concatMap((uploadSucceedEvent) => ajax.getJSON(`/admins/uploads/${uploadSucceedEvent.signedId}`)),
+        concatMap((uploadSucceedEvent) => ajax.getJSON(`/admins/posts/uploads?signed_id=${uploadSucceedEvent.signedId}`)),
         map((attachment) => {
           return {
+            id: attachment.id,
             byteSize: attachment.byte_size,
             filename: attachment.filename,
             isImage: attachment.is_image,
@@ -142,20 +146,18 @@ class UploadFile extends React.Component {
   }
 
   insertButtonHandler (event, attachment) {
-    const blobUrl = ''
-    this.props.fileItemEventEmitter.dispatchEvent(new FileInsert(blobUrl))
+    this.props.fileItemEventEmitter.dispatchEvent(new FileInsert(attachment))
 
     event.preventDefault()
   }
 
   destroyButtonHandler (event, attachment) {
-    const signedId = attachment.signedId
-    this.props.fileItemEventEmitter.dispatchEvent(new FileDestroyed(signedId))
+    this.props.fileItemEventEmitter.dispatchEvent(new FileDestroyed(attachment))
 
     event.preventDefault()
   }
 
-  // Hook for ActionStorage DirectUpload
+  // Hook for ActionStorage DirectUpload, DO NOT change the method name
   // Upload progress update with event
   directUploadWillStoreFileWithXHR(request) {
     fromEvent(request.upload, "progress")
@@ -187,7 +189,10 @@ class UploadFile extends React.Component {
           <div>
             <button onClick={(e) => this.insertButtonHandler(e, this.state.attachment)} className="btn btn-sm btn-default mr10">插入</button>
             <button onClick={(e) => this.destroyButtonHandler(e, this.state.attachment)} className="btn btn-sm btn-danger">删除</button>
-            <input type="hidden" name="post[uploads][]" value={this.state.attachment.signedId}/>
+
+            {!this.props.attachmentPersisted && (
+              <input type="hidden" name="post[uploads][]" value={this.state.attachment.signedId} />
+            )}
           </div>
         </td>
       </tr>
@@ -228,30 +233,28 @@ export default class PostFormUploadComponent extends React.Component {
 
     fromEvent(this.fileItemEventEmitter, "FileDestroyed")
       .pipe(
-        concatMap((event) => {
+        map((event) => event.attachment),
+        concatMap((attachment) => {
           const headers = {
             'X-CSRF-Param': $('meta[name="csrf-param"]').attr('content'),
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
           }
 
-          return ajax.delete('/admins/uploads/' + event.signedId, headers).pipe(
+          return ajax.delete(`/admins/posts/uploads?id=${attachment.id}`, headers).pipe(
             catchError(() => EMPTY),
-            concatMap(() => of(event))
+            concatMap(() => of(attachment))
           )
         })
       )
-      .subscribe((event) => {
-        const removedFileIndex = this.state.uploadFileList.findIndex((uploadFile) => {
-          return uploadFile.attachment.signedId === event.signedId
+      .subscribe((attachment) => {
+        const fileIndex = this.state.uploadFileList.findIndex((uploadFile) => {
+          return uploadFile.attachment && uploadFile.attachment.id === attachment.id
         })
+        const uploadFileList = [].concat(this.state.uploadFileList)
 
-        if (removedFileIndex > -1) {
-          const uploadFileList = [].concat(this.state.uploadFileList)
+        uploadFileList.splice(fileIndex, 1)
 
-          uploadFileList.splice(removedFileIndex, 1)
-
-          this.setState({uploadFileList: uploadFileList})
-        }
+        this.setState({uploadFileList: uploadFileList})
       })
 
     if (this.props.postId !== "") {
@@ -263,12 +266,14 @@ export default class PostFormUploadComponent extends React.Component {
           map((attachment) => {
             return {
               attachment: {
+                id: attachment.id,
                 byteSize: attachment.byte_size,
                 filename: attachment.filename,
                 isImage: attachment.is_image,
                 signedId: attachment.signed_id,
                 blobPath: attachment.blob_path,
-              }
+              },
+              attachmentPersisted: true,
             }
           })
         )
@@ -310,7 +315,8 @@ export default class PostFormUploadComponent extends React.Component {
                     fileItemEventEmitter={this.fileItemEventEmitter}
 
                     file={fileStruct.file}
-                    attachment={fileStruct.attachment} />
+                    attachment={fileStruct.attachment}
+                    attachmentPersisted={fileStruct.attachmentPersisted} />
       ))}
       </tbody>
 
