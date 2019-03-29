@@ -1,11 +1,13 @@
 language: ruby
+cache:
+  bundler: true
+  directories:
+    - node_modules
 
 rvm:
   - 2.5.3
 
 script:
-  - RAILS_ENV=test bundle exec rails yarn:install
-  - RAILS_ENV=test bundle exec rails webpacker:compile
   - bundle exec rspec ./spec
 
 services:
@@ -16,3 +18,6 @@ before_script:
   - export DB_PASSWORD=""
   - RAILS_ENV=test bundle exec rails db:create
   - RAILS_ENV=test bundle exec rails db:schema:load
+  - RAILS_ENV=test bundle exec rails yarn:install
+  - RAILS_ENV=test bundle exec rails webpacker:compile
+  - bash .travis/install_chromedriver.sh
