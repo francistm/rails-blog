@@ -8,7 +8,7 @@ rvm:
   - 2.5.3
 
 addons:
-  firefox: latest
+  chrome: stable
 
 script:
   - bundle exec rspec ./spec
