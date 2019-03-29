@@ -31,4 +31,29 @@ describe "Create Post", type: :system do
     expect(page).to have_text(post_slug)
     expect(page).to have_text(post_title)
   end
+
+  it 'submit with upload file' do
+    visit new_admins_post_url
+
+    post_attach_file = File.expand_path("../../../fixtures/files/file-image-fixture.jpg", __FILE__)
+
+    assert_selector "h1", text: "添加新日志"
+
+    page.find('input#post_uploads.file-hidden-input', visible: :hidden).attach_file post_attach_file
+
+    expect(page).to have_text("file-image-fixture.jpg")
+  end
+
+  it 'delete file after upload before submit' do
+    visit new_admins_post_url
+
+    post_attach_file = File.expand_path("../../../fixtures/files/file-image-fixture.jpg", __FILE__)
+
+    assert_selector "h1", text: "添加新日志"
+
+    page.find('input#post_uploads.file-hidden-input', visible: :hidden).attach_file post_attach_file
+    page.find('table#uploads-table').find('tbody').first('tr').find('button.btn-danger').click
+
+    expect(page).not_to have_text("file-image-fixture.jpg")
+  end
 end

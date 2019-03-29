@@ -324,7 +324,7 @@ export default class PostFormUploadComponent extends React.Component {
       <tr>
         <td className="text-right" colSpan="4">
           <div className="btn btn-primary file-hidden-input-container">
-            <input ref={this.fileSelector} type="file" multiple className="file-hidden-input"/>
+            <input id="post_uploads" ref={this.fileSelector} type="file" multiple className="file-hidden-input"/>
             <span className="btn-text">选择文件</span>
           </div>
         </td>
