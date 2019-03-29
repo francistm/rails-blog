@@ -10,6 +10,10 @@ describe "Create Post", type: :system do
     Warden.test_reset!
   end
 
+  before :all do
+    driven_by :selenium, using: :firefox
+  end
+
   it 'submit without upload file' do
     visit new_admins_post_url
 
