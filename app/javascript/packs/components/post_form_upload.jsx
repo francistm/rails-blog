@@ -1,4 +1,5 @@
 import React from "react"
+import QueryString from "querystring"
 import {EMPTY, from, fromEvent, of} from "rxjs"
 import {catchError, concatMap, map, mergeMap} from "rxjs/operators"
 import {ajax} from "rxjs/ajax"
@@ -235,12 +236,20 @@ export default class PostFormUploadComponent extends React.Component {
       .pipe(
         map((event) => event.attachment),
         concatMap((attachment) => {
+          const queries = {}
           const headers = {
             'X-CSRF-Param': $('meta[name="csrf-param"]').attr('content'),
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
           }
 
-          return ajax.delete(`/admins/posts/uploads?id=${attachment.id}`, headers).pipe(
+          if (this.props.postId === "") {
+            queries.signed_id = attachment.signedId
+          }
+          else {
+            queries.id = attachment.id
+          }
+
+          return ajax.delete(`/admins/posts/uploads?${QueryString.stringify(queries)}`, headers).pipe(
             catchError(() => EMPTY),
             concatMap(() => of(attachment))
           )

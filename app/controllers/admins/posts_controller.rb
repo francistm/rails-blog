@@ -66,7 +66,11 @@ class Admins::PostsController < AdminController
   end
 
   def destroy_uploads
-    ActiveStorage::Attachment.find(params[:id]).try(:purge_later)
+    if params[:id]
+      ActiveStorage::Attachment.find(params[:id]).try(:purge_later)
+    elsif params[:signed_id]
+      ActiveStorage::Blob.find_signed(params[:signed_id]).try(:purge_later)
+    end
 
     head :no_content
   end

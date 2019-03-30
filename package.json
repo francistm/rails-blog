@@ -5,6 +5,7 @@
     "activestorage": "^5.2.2-1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "prop-types": "^15.7.2",
+    "querystring": "^0.2.0",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "rxjs": "^6.4.0"
