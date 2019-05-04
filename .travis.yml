@@ -24,5 +24,5 @@ before_script:
   - RAILS_ENV=test bundle exec rails db:create
   - RAILS_ENV=test bundle exec rails db:schema:load
   - RAILS_ENV=test bundle exec rails yarn:install
-  - RAILS_ENV=test bundle exec rails webpacker:compile
+  - RAILS_ENV=test bundle exec rails assets:precompile
   - bash .travis/install_chromedriver.sh

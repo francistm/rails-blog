@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+CHROME_STABLE_VER=74.0.3729.6
+
 INSTALL_PREFIX=/usr/bin
-REMOTE_URL=http://chromedriver.storage.googleapis.com/73.0.3683.68/chromedriver_linux64.zip
+REMOTE_URL=https://chromedriver.storage.googleapis.com/${INSTALL_PREFIX}/chromedriver_linux64.zip
 
 wget $REMOTE_URL -P /tmp
 sudo unzip /tmp/chromedriver_linux64.zip -d $INSTALL_PREFIX
