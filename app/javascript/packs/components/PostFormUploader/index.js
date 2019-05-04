@@ -1,13 +1,12 @@
 import React, { PureComponent } from 'react'
-import QueryString from 'querystring'
-import { EMPTY, from, fromEvent } from 'rxjs/index'
-import { catchError, concatMap, map, mergeMap } from 'rxjs/operators/index'
-import { ajax } from 'rxjs/ajax/index'
+import { from, fromEvent } from 'rxjs/index'
+import { concatMap, map, mergeMap } from 'rxjs/operators/index'
 import PropTypes from 'prop-types'
 import { randomBytes } from 'crypto-browserify'
 import UploadFile from './UploadFile'
 import Axios from 'axios'
-import { FILE_DESTROYED_EVENT_TYPE, FILE_UPLOAD_SUCCEED_EVENT_TYPE } from './events'
+import { FILE_DESTROYED_EVENT_TYPE, FILE_INSERT_EVENT_TYPE, FILE_UPLOAD_SUCCEED_EVENT_TYPE } from './events'
+import { insertIntoInputCaret } from './utils'
 
 export function deserializeUploadFileStructFromJSON (rawObject) {
   return {
@@ -30,6 +29,7 @@ export default class PostFormUploadComponent extends PureComponent {
       uploadFileList: [],
       uploadFileListLoading: false,
     }
+
     this.fileSelector = React.createRef()
     this.fileItemEventEmitter = new EventTarget()
   }
@@ -37,12 +37,13 @@ export default class PostFormUploadComponent extends PureComponent {
   static get propTypes () {
     return {
       postId: PropTypes.string.isRequired,
+      postContentNode: PropTypes.instanceOf(HTMLTextAreaElement),
       directUploadUrl: PropTypes.string.isRequired,
     }
   }
 
   componentDidMount () {
-    const { postId } = this.props
+    const { postId, postContentNode } = this.props
 
     fromEvent(this.fileSelector.current, 'change')
       .pipe(
@@ -138,6 +139,21 @@ export default class PostFormUploadComponent extends PureComponent {
           return {
             ...prevState,
             uploadFileList: changedUploadFileList,
+          }
+        })
+      })
+
+    fromEvent(this.fileItemEventEmitter, FILE_INSERT_EVENT_TYPE)
+      .pipe(map((e) => (e.detail)))
+      .subscribe(({ postUpload }) => {
+        insertIntoInputCaret(postContentNode, (selectedContent) => {
+          const hrefOrSrc = postUpload.blobPath;
+          const contentOrAlt = selectedContent ? selectedContent : postUpload.filename;
+
+          if (!postUpload.isImage) {
+            return `\n\n[${contentOrAlt}](${hrefOrSrc})\n\n`
+          } else {
+            return `\n\n![${contentOrAlt}](${hrefOrSrc})\n\n`
           }
         })
       })
