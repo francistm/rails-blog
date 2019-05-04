@@ -16,12 +16,12 @@ describe Admins::SettingsController do
   describe 'PUT #update' do
     it 'redirect to admin/settings#index if succeed' do
       put_params = {
-        :'1' => { var: 'site_name', value: Faker::Name.name },
-        :'2' => { var: 'feed_output_count', value: 15 },
+        site_name: Faker::Name.name,
+        feed_output_count: '15',
       }
 
       put :update, params: {
-          settings: {site_setting: put_params}
+        site_setting: put_params
       }
 
       expect(response).to redirect_to [:admins, :settings]
