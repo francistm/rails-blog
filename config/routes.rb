@@ -7,9 +7,9 @@ Rails.application.routes.draw do
 
     resources :links, except: :show
     resources :posts, except: :show do
-      get 'uploads', action: 'index_uploads'
-      get 'uploads', action: 'show_uploads', on: :collection
-      delete 'uploads', action: 'destroy_uploads', on: :collection
+      get 'uploads', action: :index_uploads
+      delete 'uploads', action: :destroy_uploads, on: :collection
+      get 'retrieve-upload-blob', action: :retrieve_upload_blob, on: :collection
     end
   end
 

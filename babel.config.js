@@ -28,6 +28,7 @@ module.exports = function(api) {
       (isProductionEnv || isDevelopmentEnv) && [
         require('@babel/preset-env').default,
         {
+          corejs: 'core-js@3',
           forceAllTransforms: true,
           useBuiltIns: 'entry',
           modules: false,

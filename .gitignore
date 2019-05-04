@@ -1,4 +1,5 @@
 *.swp
+*.iml
 .byebug_history
 
 /tmp
@@ -14,17 +15,13 @@
 
 cmake-build-debug/
 cmake-build-release/
-.idea/**/mongoSettings.xml
 *.iws
 out/
-.idea_modules/
 atlassian-ide-plugin.xml
-.idea/replstate.xml
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-.idea/httpRequests
 *.rbc
 capybara-*.html
 /public/system

@@ -48,31 +48,31 @@ class Admins::PostsController < AdminController
     redirect_to [:admins, :posts]
   end
 
-  def show_uploads
-    @upload = ActiveStorage::Blob.find_signed params[:signed_id]
-
-    respond_to do |format|
-      format.json { render json: compose_attachment(@upload) }
-    end
-  end
-
   def index_uploads
     @post = Post.find params[:post_id]
-    @uploads = @post.uploads
+    @attachments = @post.uploads.map(&method(:compose_upload))
 
     respond_to do |format|
-      format.json { render json: @uploads.map(&method(:compose_attachment)) }
+      format.json { render json: @attachments }
     end
   end
 
   def destroy_uploads
-    if params[:id]
-      ActiveStorage::Attachment.find(params[:id]).try(:purge_later)
-    elsif params[:signed_id]
-      ActiveStorage::Blob.find_signed(params[:signed_id]).try(:purge_later)
-    end
+    @active_storage_instance = GlobalID::Locator.locate_signed params[:signed_gid]
 
-    head :no_content
+    if @active_storage_instance.nil?
+      head :not_found
+    else
+      @active_storage_instance.purge_later && head(:no_content)
+    end
+  end
+
+  def retrieve_upload_blob
+    @blob = ActiveStorage::Blob.find_signed params[:signed_id]
+
+    respond_to do |format|
+      format.json { render json: compose_upload(@blob) }
+    end
   end
 
   private
@@ -87,14 +87,15 @@ class Admins::PostsController < AdminController
     )
   end
 
-  def compose_attachment(attachment)
+  def compose_upload(upload)
     {}.tap do |h|
-      h[:id] = attachment.id
-      h[:byte_size] = attachment.byte_size
-      h[:filename] = attachment.filename
-      h[:is_image] = attachment.image?
-      h[:signed_id] = attachment.signed_id
-      h[:blob_path] = rails_blob_path(attachment)
+      h[:is_image] = upload.image?
+      h[:byte_size] = upload.byte_size
+      h[:filename] = upload.filename
+      h[:signed_id] = upload.signed_id
+      h[:signed_gid] = upload.to_sgid.to_s
+      h[:blob_path] = rails_blob_path(upload)
+      h[:class_name] = upload.class.name
     end
   end
 end
