@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 ruby '2.6.3'
 
 gem 'figaro'
-gem 'mysql2'
 gem 'turbolinks'
 gem 'jquery-rails'
 gem 'nprogress-rails'
@@ -12,6 +11,7 @@ gem 'record_tag_helper'
 
 gem 'rails', '5.0.0.1'
 gem 'devise', '~> 4.2.0'
+gem 'mysql2', '~> 0.4.10'
 gem 'jbuilder', '~> 2.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'redcarpet', '~> 3.3.4'
@@ -53,5 +53,3 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'rails-controller-testing'
 end
-
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
