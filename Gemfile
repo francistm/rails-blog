@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '2.5.3'
+ruby '2.6.3'
 
 gem 'puma'
 gem 'figaro'
-gem 'mysql2'
 gem 'turbolinks'
 gem 'jquery-rails'
 gem 'nprogress-rails'
@@ -14,12 +13,13 @@ gem 'bootsnap', require: false
 
 gem 'rails', '5.2.2'
 gem 'devise', '~> 4.5.0'
+gem 'mysql2', '~> 0.5.0'
 gem 'jbuilder', '~> 2.0'
 gem 'webpacker', '~> 4.x'
 gem 'uglifier', '>= 1.3.0'
 gem 'redcarpet', '~> 3.3.4'
 gem 'sass-rails', '~> 5.0.0'
-gem 'pygments.rb', '~> 0.6.3'
+gem 'pygments.rb', '~> 1.1.0'
 gem 'coffee-rails', '~> 4.2.0'
 gem 'date_validator', '~> 0.9.0'
 gem 'bootstrap-sass', '~> 3.3.6'
@@ -51,5 +51,3 @@ group :test, :development do
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
 end
-
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
