@@ -12,7 +12,7 @@ gem 'record_tag_helper'
 gem 'bootsnap', require: false
 
 gem 'rails', '5.2.2'
-gem 'devise', '~> 4.5.0'
+gem 'devise', '~> 4.6.0'
 gem 'mysql2', '~> 0.5.0'
 gem 'jbuilder', '~> 2.0'
 gem 'webpacker', '~> 4.x'
@@ -22,7 +22,7 @@ gem 'sass-rails', '~> 5.0.0'
 gem 'pygments.rb', '~> 1.1.0'
 gem 'coffee-rails', '~> 4.2.0'
 gem 'date_validator', '~> 0.9.0'
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap-sass', '~> 3.4.1'
 gem 'rails-settings-cached', '~> 0.7.0'
 
 group :doc do
