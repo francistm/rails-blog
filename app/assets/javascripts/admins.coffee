@@ -4,6 +4,3 @@
 //= require bootstrap-sprockets
 //= require nprogress
 //= require nprogress-turbolinks
-//= require underscore.min
-//= require jquery.fileupload
-//= require jquery.plugins

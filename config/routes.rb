@@ -6,9 +6,11 @@ Rails.application.routes.draw do
     put 'settings', to: 'settings#update'
 
     resources :links, except: :show
-    resources :posts, except: :show
-    resources :uploads, except: [:edit, :update]
-    resources :jekyll_imports, only: [:new, :create]
+    resources :posts, except: :show do
+      get 'uploads', action: :index_uploads
+      delete 'uploads', action: :destroy_uploads, on: :collection
+      get 'retrieve-upload-blob', action: :retrieve_upload_blob, on: :collection
+    end
   end
 
   devise_for :admins, path: 'admins', module: :admins

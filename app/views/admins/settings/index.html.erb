@@ -1,15 +1,12 @@
 <% provide(:page_title, t('admin/settings.index')) %>
 
-<%= form_for :settings, url: [:admins, :settings], method: :put do |f| %>
+<%= form_for :site_setting, url: [:admins, :settings], method: :put do |f| %>
 
-  <% @site_settings.each do |setting| %>
-    <%= f.fields_for 'site_setting[]', setting do |ff| %>
-      <div class="form-group">
-        <%= ff.label setting.var %>
-        <%= ff.hidden_field :var %>
-        <%= ff.text_field :value, class: 'form-control' %>
-      </div>
-    <% end %>
+  <% @site_settings.each do |site_setting| %>
+    <div class="form-group">
+      <%= f.label site_setting[:var] %>
+      <%= f.text_field site_setting[:var], value: site_setting[:value], class: 'form-control' %>
+    </div>
   <% end %>
 
   <%= f.submit class: 'btn btn-primary' %>

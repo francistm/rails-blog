@@ -1,4 +1,7 @@
 <%= form_for [:admins, post] do |f| %>
+
+  <%= f.hidden_field :id %>
+
     <div class="form-group">
       <%= f.label :slug %>
       <%= f.text_field :slug, class: 'form-control' %>
@@ -18,31 +21,8 @@
 
     <div class="form-group">
       <%= f.label :uploads %>
-      <table id="uploads-table" class="table">
-        <thead>
-        <tr>
-          <td>#</td>
-          <td>文件名</td>
-          <td>文件大小</td>
-          <td></td>
-        </tr>
-        </thead>
-
-        <tbody>
-        <%= render partial: 'admins/posts/upload', collection: post.uploads %>
-        </tbody>
-
-        <tfoot>
-        <tr>
-          <td class="text-right" colspan="4">
-              <span class="btn btn-primary btn-file-upload">
-                <span class="btn-text">选择文件</span>
-                <input id="file-add-btn" class="file-hidden-input" type="file"/>
-              </span>
-          </td>
-        </tr>
-        </tfoot>
-      </table>
+      <%= f.file_field :uploads, direct_upload: true, class: 'hidden' %>
+      <div id="post-form-upload-component">上传组件加载中</div>
     </div>
 
     <div class="form-group">
@@ -52,54 +32,3 @@
 
     <%= f.submit class: 'btn btn-primary' %>
 <% end %>
-
-<script type="text/javascript" charset="utf-8">
-  document.addEventListener('turbolinks:load', function () {
-    var fileAddBtn = $("#file-add-btn");
-    var postContentTextArea = $("#post_content");
-
-    var fileAddBtnParent = fileAddBtn.parent();
-    var fileAddBtnSibling = fileAddBtn.siblings('.btn-text');
-
-    fileAddBtn.fileupload({
-      type: 'POST',
-      formData: {},
-      url: '/admins/uploads.js',
-      paramName: 'upload[file]',
-      change: function (e, data) {
-        fileAddBtnSibling.html('上传中');
-        fileAddBtnParent.addClass('disabled');
-      },
-      error: function (xhr, status, error) {
-        alert("文件上传失败，请重试");
-        fileAddBtnSibling.html('选择文件');
-        fileAddBtnParent.removeClass('disabled');
-      },
-      success: function (result, status, xhr) {
-        fileAddBtnSibling.html('选择文件');
-        fileAddBtnParent.removeClass('disabled');
-      }
-    });
-
-    $(document).on('click', '[data-markdown-url]', function (e) {
-      var tpl = _.template('<<%%= url %>>');
-      var url = $(e.target).attr('data-url');
-
-      postContentTextArea.insertAtCaret(tpl({ url: url }));
-    });
-
-    $(document).on('click', '[data-markdown-image]', function (e) {
-      var tpl = _.template('![](<%%= url %>)');
-      var url = $(e.target).attr('data-url');
-
-      postContentTextArea.insertAtCaret(tpl({ url: url }));
-    });
-  });
-
-  document.addEventListener('turbolinks:before-cache', function () {
-    $("#file-add-btn").fileupload('destroy');
-
-    $(document).off('click', '[data-markdown-url]');
-    $(document).off('click', '[data-markdown-image]');
-  });
-</script>

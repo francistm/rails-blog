@@ -48,6 +48,33 @@ class Admins::PostsController < AdminController
     redirect_to [:admins, :posts]
   end
 
+  def index_uploads
+    @post = Post.find params[:post_id]
+    @attachments = @post.uploads.map(&method(:compose_upload))
+
+    respond_to do |format|
+      format.json { render json: @attachments }
+    end
+  end
+
+  def destroy_uploads
+    @active_storage_instance = GlobalID::Locator.locate_signed params[:signed_gid]
+
+    if @active_storage_instance.nil?
+      head :not_found
+    else
+      @active_storage_instance.purge_later && head(:no_content)
+    end
+  end
+
+  def retrieve_upload_blob
+    @blob = ActiveStorage::Blob.find_signed params[:signed_id]
+
+    respond_to do |format|
+      format.json { render json: compose_upload(@blob) }
+    end
+  end
+
   private
 
   def post_params
@@ -56,7 +83,19 @@ class Admins::PostsController < AdminController
       :title,
       :content,
       :published_at,
-      upload_ids: []
+      uploads: []
     )
+  end
+
+  def compose_upload(upload)
+    {}.tap do |h|
+      h[:is_image] = upload.image?
+      h[:byte_size] = upload.byte_size
+      h[:filename] = upload.filename
+      h[:signed_id] = upload.signed_id
+      h[:signed_gid] = upload.to_sgid.to_s
+      h[:blob_path] = rails_blob_path(upload)
+      h[:class_name] = upload.class.name
+    end
   end
 end
