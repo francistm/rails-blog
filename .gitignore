@@ -1,10 +1,15 @@
-*.swp
+*.iml
+*.sw[op]
 .byebug_history
 
 /tmp
 /log
 /.bundle
-/.vagrant
+/.idea
+/node_modules
+/public/packs
+/public/packs-test
+/storage
 /coverage
 /db/*.sqlite3
 /db/*.sqlite3-journal
