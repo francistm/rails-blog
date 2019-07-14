@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangePublishedAtToDateInPosts < ActiveRecord::Migration
   def up
     change_table :posts do |t|

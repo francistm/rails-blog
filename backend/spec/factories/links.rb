@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :link, class: Link do
     url { Faker::Internet.url }

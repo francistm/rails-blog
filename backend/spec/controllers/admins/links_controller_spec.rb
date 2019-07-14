@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'faker'
 require 'rails_helper'
 
@@ -19,12 +21,12 @@ describe Admins::LinksController do
     end
 
     it 'render :edit template' do
-      get :edit, params: {id: @link.id}
+      get :edit, params: { id: @link.id }
       expect(response).to render_template :edit
     end
 
     it 'assigns :link variable' do
-      get :edit, params: {id: @link.id}
+      get :edit, params: { id: @link.id }
       expect(assigns(:link)).to eq @link
     end
   end
@@ -39,14 +41,14 @@ describe Admins::LinksController do
 
   describe 'POST #create' do
     it 'redirect if create success' do
-      post :create, params: {link: attributes_for(:link)}
+      post :create, params: { link: attributes_for(:link) }
 
       expect(flash[:success]).not_to be_blank
-      expect(response).to redirect_to [:admins, :links]
+      expect(response).to redirect_to %i[admins links]
     end
 
     it 'render :new if url blank' do
-      post :create, params: {link: attributes_for(:link, url: '')}
+      post :create, params: { link: attributes_for(:link, url: '') }
 
       expect(flash.now[:danger]).not_to be_blank
       expect(response).to render_template :new
@@ -54,7 +56,7 @@ describe Admins::LinksController do
 
     it 'render :new if url invalid' do
       post :create, params: {
-          link: attributes_for(:link, url: Faker::Name.name)
+        link: attributes_for(:link, url: Faker::Name.name)
       }
 
       expect(flash.now[:danger]).not_to be_blank
@@ -63,7 +65,7 @@ describe Admins::LinksController do
 
     it 'render :new if title blank' do
       post :create, params: {
-          link: attributes_for(:link, title: '')
+        link: attributes_for(:link, title: '')
       }
 
       expect(flash.now[:danger]).not_to be_blank
@@ -78,16 +80,16 @@ describe Admins::LinksController do
 
     it 'redirect if update success' do
       patch :update, params: {
-          id: @link.id, link: attributes_for(:link)
+        id: @link.id, link: attributes_for(:link)
       }
 
       expect(flash[:success]).not_to be_blank
-      expect(response).to redirect_to [:admins, :links]
+      expect(response).to redirect_to %i[admins links]
     end
 
     it 'render :edit if url blank' do
       patch :update, params: {
-          id: @link.id, link: attributes_for(:link, url: '')
+        id: @link.id, link: attributes_for(:link, url: '')
       }
 
       expect(flash.now[:danger]).not_to be_blank
@@ -96,7 +98,7 @@ describe Admins::LinksController do
 
     it 'render :new if url invalid' do
       patch :update, params: {
-          id: @link.id, link: attributes_for(:link, url: Faker::Name.name)
+        id: @link.id, link: attributes_for(:link, url: Faker::Name.name)
       }
 
       expect(flash.now[:danger]).not_to be_blank
@@ -105,7 +107,7 @@ describe Admins::LinksController do
 
     it 'render :new if title blank' do
       patch :update, params: {
-          id: @link.id, link: attributes_for(:link, title: '')
+        id: @link.id, link: attributes_for(:link, title: '')
       }
 
       expect(flash.now[:danger]).not_to be_blank
@@ -119,12 +121,12 @@ describe Admins::LinksController do
     end
 
     it 'redirect after request' do
-      delete :destroy, params: {id: @link.id}
-      expect(response).to redirect_to [:admins, :links]
+      delete :destroy, params: { id: @link.id }
+      expect(response).to redirect_to %i[admins links]
     end
 
     it 'change db when destroy success' do
-      p = Proc.new { delete :destroy, params: {id: @link.id} }
+      p = proc { delete :destroy, params: { id: @link.id } }
       expect(p).to change(Link, :count).by -1
     end
   end

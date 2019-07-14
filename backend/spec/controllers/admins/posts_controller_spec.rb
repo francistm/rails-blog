@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Admins::PostsController do
@@ -15,7 +17,7 @@ describe Admins::PostsController do
   describe 'GET #edit' do
     it 'render :edit view' do
       post = create(:post)
-      get :edit, params: {id: post.id}
+      get :edit, params: { id: post.id }
 
       expect(assigns(:post)).to eq post
       expect(response).to render_template :edit
@@ -32,7 +34,7 @@ describe Admins::PostsController do
   describe 'POST #create' do
     it 'render :new view if failed (slug blank)' do
       post :create, params: {
-          post: attributes_for(:post, slug: '')
+        post: attributes_for(:post, slug: '')
       }
 
       expect(flash[:danger]).not_to be_blank
@@ -42,7 +44,7 @@ describe Admins::PostsController do
     it 'render :new view if failed (slug duplicate)' do
       original_post = create(:post)
       post :create, params: {
-          post: attributes_for(:post, slug: original_post.slug)
+        post: attributes_for(:post, slug: original_post.slug)
       }
 
       expect(flash[:danger]).not_to be_blank
@@ -51,7 +53,7 @@ describe Admins::PostsController do
 
     it 'render :new view if failed (title blank)' do
       post :create, params: {
-          post: attributes_for(:post, title: '')
+        post: attributes_for(:post, title: '')
       }
 
       expect(flash[:danger]).not_to be_blank
@@ -60,7 +62,7 @@ describe Admins::PostsController do
 
     it 'render :new view if failed (content blank)' do
       post :create, params: {
-          post: attributes_for(:post, content: '')
+        post: attributes_for(:post, content: '')
       }
 
       expect(flash[:danger]).not_to be_blank
@@ -69,7 +71,7 @@ describe Admins::PostsController do
 
     it 'render :new view if failed (published_at blank)' do
       post :create, params: {
-          post: attributes_for(:post, published_at: '')
+        post: attributes_for(:post, published_at: '')
       }
 
       expect(flash[:danger]).not_to be_blank
@@ -78,11 +80,11 @@ describe Admins::PostsController do
 
     it 'redirect with flash if create post succeed' do
       post :create, params: {
-          post: attributes_for(:post)
+        post: attributes_for(:post)
       }
 
       expect(flash[:success]).not_to be_blank
-      expect(response).to redirect_to [:admins, :posts]
+      expect(response).to redirect_to %i[admins posts]
     end
   end
 
@@ -93,7 +95,7 @@ describe Admins::PostsController do
 
     it 'render :edit view if failed (slug blank)' do
       patch :update, params: {
-          id: @post.id, post: attributes_for(:post, slug: '')
+        id: @post.id, post: attributes_for(:post, slug: '')
       }
 
       expect(flash[:danger]).not_to be_blank
@@ -103,7 +105,7 @@ describe Admins::PostsController do
     it 'render :edit view if failed (slug duplicate)' do
       post = create(:post)
       patch :update, params: {
-          id: @post.id, post: attributes_for(:post, slug: post.slug)
+        id: @post.id, post: attributes_for(:post, slug: post.slug)
       }
 
       expect(flash[:danger]).not_to be_blank
@@ -112,7 +114,7 @@ describe Admins::PostsController do
 
     it 'render :edit view if failed (title blank)' do
       patch :update, params: {
-          id: @post.id, post: attributes_for(:post, title: '')
+        id: @post.id, post: attributes_for(:post, title: '')
       }
 
       expect(flash[:danger]).not_to be_blank
@@ -121,7 +123,7 @@ describe Admins::PostsController do
 
     it 'render :edit view if failed (content blank)' do
       patch :update, params: {
-          id: @post.id, post: attributes_for(:post, content: '')
+        id: @post.id, post: attributes_for(:post, content: '')
       }
 
       expect(flash[:danger]).not_to be_blank
@@ -130,7 +132,7 @@ describe Admins::PostsController do
 
     it 'render :edit view if failed (published_at blank)' do
       patch :update, params: {
-          id: @post.id, post: attributes_for(:post, published_at: '')
+        id: @post.id, post: attributes_for(:post, published_at: '')
       }
 
       expect(flash[:danger]).not_to be_blank
@@ -140,8 +142,8 @@ describe Admins::PostsController do
     it 'redirect with flash if update post succeed' do
       attrs = attributes_for(:post)
       patch :update, params: {
-          id: @post.id,
-          post: attrs,
+        id: @post.id,
+        post: attrs
       }
 
       @post.reload
@@ -151,7 +153,7 @@ describe Admins::PostsController do
       expect(@post.content).to eq attrs[:content]
 
       expect(flash[:success]).not_to be_blank
-      expect(response).to redirect_to [:admins, :posts]
+      expect(response).to redirect_to %i[admins posts]
     end
   end
 
@@ -159,13 +161,13 @@ describe Admins::PostsController do
     it 'redirect with flash if destroy succeed' do
       post = create(:post)
 
-      p = Proc.new {
-        delete :destroy, params: {id: post.id}
-      }
+      p = proc do
+        delete :destroy, params: { id: post.id }
+      end
 
       expect(p).to change(Post, :count).by -1
       expect(flash[:success]).not_to be_blank
-      expect(response).to redirect_to [:admins, :posts]
+      expect(response).to redirect_to %i[admins posts]
     end
   end
 end
