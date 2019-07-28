@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'faker'
 require 'rails_helper'
 
@@ -19,14 +17,14 @@ describe Admins::SettingsController do
     it 'redirect to admin/settings#index if succeed' do
       put_params = {
         site_name: Faker::Name.name,
-        feed_output_count: '15'
+        feed_output_count: '15',
       }
 
       put :update, params: {
         site_setting: put_params
       }
 
-      expect(response).to redirect_to %i[admins settings]
+      expect(response).to redirect_to [:admins, :settings]
     end
   end
 end

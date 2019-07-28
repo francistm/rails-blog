@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'faker'
 
 FactoryBot.define do
@@ -10,6 +8,6 @@ FactoryBot.define do
     title { Faker::Lorem.sentence }
     content { Faker::Lorem.paragraph }
 
-    published_at { Time.zone.now }
+    published_at { Time.now }
   end
 end

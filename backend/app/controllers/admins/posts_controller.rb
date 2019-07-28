@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Admins::PostsController < AdminController
   def new
     @post = Post.new
@@ -20,7 +18,7 @@ class Admins::PostsController < AdminController
 
     if @post.valid? && @post.save
       flash[:success] = t 'admin/posts.create_success', title: @post.title
-      redirect_to(%i[admins posts]) && return
+      redirect_to [:admins, :posts] and return
     end
 
     flash.now[:danger] = @post.errors.full_messages
@@ -33,7 +31,7 @@ class Admins::PostsController < AdminController
 
     if @post.valid? && @post.save
       flash[:success] = t 'admin/posts.update_success', title: @post.title
-      redirect_to(%i[admins posts]) && return
+      redirect_to [:admins, :posts] and return
     end
 
     flash.now[:danger] = @post.errors.full_messages
@@ -47,7 +45,7 @@ class Admins::PostsController < AdminController
       flash[:success] = t 'admin/posts.destroy_success', title: @post.title
     end
 
-    redirect_to %i[admins posts]
+    redirect_to [:admins, :posts]
   end
 
   def index_uploads

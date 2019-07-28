@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Admins::LinksController < AdminController
   def new
     @link = Link.new
@@ -18,7 +16,7 @@ class Admins::LinksController < AdminController
 
     if @link.valid? && @link.save
       flash[:success] = t 'admin/links.create_success', title: @link.title
-      redirect_to(%i[admins links]) && return
+      redirect_to [:admins, :links] and return
     end
 
     flash.now[:danger] = @link.errors.full_messages
@@ -31,7 +29,7 @@ class Admins::LinksController < AdminController
 
     if @link.valid? && @link.save
       flash[:success] = t 'admin/links.update_success', title: @link.title
-      redirect_to(%i[admins links]) && return
+      redirect_to [:admins, :links] and return
     end
 
     flash.now[:danger] = @link.errors.full_messages
@@ -45,7 +43,7 @@ class Admins::LinksController < AdminController
       flash[:success] = t 'admin/links.destroy_success', title: @link.title
     end
 
-    redirect_to %i[admins links]
+    redirect_to [:admins, :links]
   end
 
   private

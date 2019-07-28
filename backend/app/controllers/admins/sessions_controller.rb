@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 class Admins::SessionsController < ::AdminController
   layout 'admin_sessions'
-  skip_before_action :authenticate_admin!, only: %i[new create]
+  skip_before_action :authenticate_admin!, only: [:new, :create]
 
   def new
     @admin = Admin.new
@@ -16,17 +14,17 @@ class Admins::SessionsController < ::AdminController
 
     if @admin.present? && @admin.valid_password?(password)
       sign_in :admin, @admin
-      redirect_to(after_sign_in_path_for(@admin)) && return
+      redirect_to after_sign_in_path_for(@admin) and return
     end
 
     flash[:danger] = t 'admin/sessions.sign_in_failed'
-    redirect_to %i[new admin session]
+    redirect_to [:new, :admin, :session]
   end
 
   def destroy
     sign_out :admin
     flash[:success] = t 'admin/sessions.sign_out_success'
-    redirect_to %i[new admin session]
+    redirect_to [:new, :admin, :session]
   end
 
   private

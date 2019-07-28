@@ -1,9 +1,6 @@
-# frozen_string_literal: true
-
 module ApplicationHelper
   def flash_mesg(klass, mesgs)
     return flash_mesg_box(klass, mesgs) if mesgs.is_a?(String)
-
     mesgs.map { |mesg| flash_mesg_box(klass, mesg) }.join if mesgs.is_a?(Array)
   end
 
@@ -15,7 +12,7 @@ module ApplicationHelper
 
   class HTMLWithPygments < Redcarpet::Render::HTML
     def block_code(code, lang)
-      lang = 'text' if lang.blank?
+      lang = "text" if lang.blank?
       Pygments.highlight code, lexer: lang
     end
   end
@@ -32,11 +29,11 @@ module ApplicationHelper
   end
 
   def markdown_parser_render
-    HTMLWithPygments.new(
+    HTMLWithPygments.new({
       hard_wrap: false,
       filter_html: true,
-      link_attributes: { rel: 'external nofollow' }
-    )
+      link_attributes: { rel: 'external nofollow' },
+    })
   end
 
   def markdown_parser_options

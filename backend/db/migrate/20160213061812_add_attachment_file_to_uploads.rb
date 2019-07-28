@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class AddAttachmentFileToUploads < ActiveRecord::Migration
   def self.up
     change_table :uploads do |t|

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Admins::SettingsController < AdminController
   def index
     @site_settings = setting_list.map do |setting_var|
@@ -16,7 +14,7 @@ class Admins::SettingsController < AdminController
     end
 
     flash[:success] = t 'admin/settings.setting_update_success'
-    redirect_to %i[admins settings]
+    redirect_to [:admins, :settings]
   end
 
   private

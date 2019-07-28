@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Guests::PostsController < GuestController
   def show
     @post = Post.find_by! slug: params[:slug]
