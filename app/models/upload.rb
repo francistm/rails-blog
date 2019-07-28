@@ -1,4 +1,6 @@
-class Upload < ActiveRecord::Base
+# frozen_string_literal: true
+
+class Upload < ApplicationRecord
   attr_accessor :file
 
   validates :admin, presence: true
@@ -11,6 +13,6 @@ class Upload < ActiveRecord::Base
   belongs_to :attachable, polymorphic: true
 
   def is_image?
-    file_content_type =~ /\Aimage\/.*\z/
+    file_content_type =~ %r{\Aimage/.*\z}
   end
 end

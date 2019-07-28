@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admins::RegistrationsController < AdminController
   def edit
     @admin = current_admin
@@ -18,7 +20,7 @@ class Admins::RegistrationsController < AdminController
       bypass_sign_in @admin if password_changed
 
       flash[:success] = t 'admin/registrations.admin_update_success'
-      redirect_to [:edit, :admin, :registration] and return
+      redirect_to(%i[edit admin registration]) && return
     end
 
     flash.now[:danger] = @admin.errors.full_messages

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CHROME_STABLE_VER=74.0.3729.6
+CHROME_STABLE_VER=75.0.3770.140
 
 INSTALL_PREFIX=/usr/bin
 REMOTE_URL=https://chromedriver.storage.googleapis.com/${CHROME_STABLE_VER}/chromedriver_linux64.zip
