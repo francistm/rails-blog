@@ -10,17 +10,14 @@ rvm:
 addons:
   chrome: stable
 
-script:
-  - bundle exec rspec ./spec
-
 services:
+  - xvfb
   - mysql
 
 before_script:
   - export DISPLAY=:99.0
   - export DB_USERNAME=root
   - export DB_PASSWORD=""
-  - sh -e /etc/init.d/xvfb start && sleep 5
   - RAILS_ENV=test bundle exec rails db:create
   - RAILS_ENV=test bundle exec rails db:schema:load
   - RAILS_ENV=test bundle exec rails yarn:install
@@ -28,3 +25,6 @@ before_script:
   - bash .travis/install_chromedriver.sh
   - mysql -e 'CREATE DATABASE IF NOT EXISTS rails_blog_test;' -uroot
   - RAILS_ENV=test bundle exec rake db:schema:load
+
+  script:
+    - bundle exec rspec ./spec
