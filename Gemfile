@@ -15,7 +15,7 @@ gem 'turbolinks'
 
 gem 'coffee-rails', '~> 5.0.0'
 gem 'date_validator', '~> 0.9.0'
-gem 'devise', '~> 4.6.0'
+gem 'devise', '~> 4.7.1'
 gem 'jbuilder', '~> 2.0'
 gem 'mysql2', '~> 0.5.0'
 gem 'pygments.rb', '~> 1.1.0'
