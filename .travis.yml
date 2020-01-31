@@ -7,9 +7,6 @@ cache:
 rvm:
   - 2.6.3
 
-node_js:
-  - 12
-
 addons:
   chrome: stable
 
@@ -21,6 +18,8 @@ before_script:
   - export DISPLAY=:99.0
   - export DB_USERNAME=root
   - export DB_PASSWORD=""
+  - nvm install 10
+  - node -v
   - RAILS_ENV=test bundle exec rails db:create
   - RAILS_ENV=test bundle exec rails db:schema:load
   - RAILS_ENV=test bundle exec rails yarn:install
